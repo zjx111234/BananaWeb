@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block page-container %}
+       <div class="wrap-left">
+       {% if user_form.error%}
+        <p style="color: red;">
+            Please correct the error{{ user_form.error|pluralize }} below.
+        </p>
+    {% endif %}
+
+        <form method="post" enctype="multipart/form-data" >
+             <br />{% csrf_token %}<br />
+            <div class="register-content">
+                  <div class="title">
+                  <label for="id_subject">注册</label>
+                    </div>
+                    {% for item in error %}
+                        <p class="errors-remind" style="color:red;">{{item}}</p>
+                    {% endfor %}
+                <div class="field">
+                  <label for="id_subject">用户名:</label>
+                  {{ user_form.username }}
+                </div>
+                <div class="field">
+
+                  <label for="id_email">密码:</label>
+                  {{ user_form.password1 }}
+                </div>
+                <div class="field">
+                  <label for="id_email">再次输入密码:</label>
+                  {{ user_form.password2 }}
+                </div>
+                <div class="field">
+                  <label for="id_message">昵称:</label>
+                  {{ user_form.nickname }}
+                </div>
+                <div class="field">
+                  <label for="id_message">邮箱:</label>
+                  {{ user_form.email }}
+                </div>
+                <div class="field">
+                  <label for="id_img">头像:</label>
+                    <a class="head-img-file">选择文件{{ user_form.head_img }}</a>
+                </div>
+            </div>
+            <input type="submit" class="register-submit" value="注册">
+        </form>
+       </div>
+        <div class="clear-both">
+
+
+
+    </div>
+
+
+
+{% endblock %}
+{% block bottm-js %}
+<script>
+    $(".head-img-file").on("change","input[type='file']",function(){
+    var filePath=$(this).val();
+    if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1){
+        $(".fileerrorTip").html("").hide();
+        var arr=filePath.split('\\');
+        var fileName=arr[arr.length-1];
+        $(".showFileName").html(fileName);
+    }else{
+        $(".showFileName").html("");
+        $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
+        return false
+    }
+})
+    </script>
+{% endblock %}
