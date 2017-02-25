@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load custom %}
+{% block page-container %}
+    <body style="background-color: rgb(240, 244, 251);">
+    <div class="container per_center per_center_body">
+        <div class="user-info-warp">
+            <div class="user-head-box">
+                <div class="user-face">
+                    <img src="/static/uploads/{{ user_info.head_img|truncate_url }}"
+                         style="width:100px;height:100px;">
+                </div>
+                <div class="user-name">{{ user_info.name }}<a href="/vip" target="_blank"></a></div>
+                <div class="user-one">
+                    <span class="show-span show-yijuhua">
+                        <span class="show-span js-edit-one">{{ user_info.signature }}</span>
+                    </span>
+                </div>
+                <div class="user-level">
+                    级别：<span class="c2">{{ user_info.user_level }}</span>
+                </div>
+                <div class="user-expr">
+                    经验值：<span class="c2">{{ user_info.experience }}</span>
+                </div>
+            </div>
+            <div class="user-info-box">
+                <div class="col-lg-5">
+                    <div class="user-info">
+                        <i class="icon icon-user-point"></i>
+                        公司：<span class="c2">{{ user_info.company }}</span>
+                    </div>
+                    <div class="user-info">
+                        <i class="icon icon-user-point"></i>
+                        职业：<span class="c2">{{ user_info.profession }}</span>
+                    </div>
+                    <div class="user-info">
+                        <i class="icon icon-user-point"></i>
+                        邮箱：<span class="c2">{{ request.user.email }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="user-info">
+                        <i class="icon icon-user-point"></i>
+                        性别：<span class="c2">{{ user_info.sex }}</span>
+                    </div>
+                    <div class="user-info ">
+                        <i class="icon icon-user-point"></i>
+                        微博：<span class="c2">{{ user_info.weibo }}</span>
+                    </div>
+                </div>
+
+                {% if request.user.userprofile.id == user_info.id %}
+                    <div class="btn-box">
+                        <a href="{% url 'modify_user_info' request.user.userprofile.id %}"
+                           class="btn btn-user-edit pull-right">修改基础资料</a>
+                    </div>
+                {% else %}
+                    <div class="btn-box" style="margin-bottom: 80px;"> </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% block user-content %}
+            <div class="user-menu-warp">
+            <div class="menu-warp">
+                <ul>
+                    {% if request.user.userprofile.id == user_info.id %}
+                        <li class="active"><a href="{% url 'user_detail' request.user.userprofile.id %}">我的消息</a></li>
+                        <li class=""><a href="{% url 'user_comment' request.user.userprofile.id %}">我的评论</a></li>
+                        <li class=""><a href="{% url 'user_article' request.user.userprofile.id %}">我的文章</a></li>
+                        <li class=""><a href="{% url 'user_draft' request.user.userprofile.id %}">我的草稿</a></li>
+                        <li class=""><a href="{% url 'user_like_article' request.user.userprofile.id %}">赞过的文章</a></li>
+                    {% else %}
+                        <li class=""><a href="{% url 'user_comment' request.get_full_path|get_end_arg %}">TA的评论</a></li>
+                        <li class=""><a href="{% url 'user_article' request.get_full_path|get_end_arg %}">TA的文章</a></li>
+                        <li class=""><a
+                                href="{% url 'user_like_article' request.get_full_path|get_end_arg %}">TA赞过的文章</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="user-content-warp">
+                <ul class="nav-box">
+                    <li class="active"><a href="{% url 'user_detail' request.user.userprofile.id %}">评论回复<span
+                            class="badge comment_message"></span></a></li>
+                    <li><a href="#">系统消息<span class="badge system_message"></span></a>
+                    </li>
+                    <li><a href="#">私信<span class="badge private_message"></span></a>
+                    </li>
+                </ul>
+                {% if comment_reply %}
+
+                    <div class="message-box">
+                        <ul>
+                            {% for k,v in comment_reply.items %}
+                                <li type="comment">
+                                    <div class="reply-message-title">文章:{{ k }}</div>
+                                    {% for comment,reply in v.items %}
+                                        <div class="reply-message">
+                                            <div class="reply-content">我的评论：{{ comment }}</div>
+                                        <div class="child-comment child-comment-sm">
+                                            <div class="message-title"><span class="comment-node-text">回复：</span></div>
+
+                                            {% for item in reply %}
+                                                <div class="reply-messages"> {{ item }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        </div>
+                                    {% endfor %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="no-content-prompt">
+                        您还没有消息
+                    </div>
+                {% endif %}
+            </div>
+        {% endblock %}
+        </div>
+
+
+    </div>
+    </body>
+{% endblock %}
+
+{% block bottom-js %}
+    <script type="text/javascript">
+
+        $(".user-content-warp li").click(function () {
+            $(".user-content-warp li").removeClass("active");
+            $(this).addClass("active");
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load custom %}
+{% block page-container %}
+    <div class="edit-warp">
+        <div class="placeholder-height"></div>
+        <div class="user-container" style="min-height: 700px;">
+            <div class="go-back"><a href="{% url 'user_detail' request.user.userprofile.id %}"><i
+                    class="icon icon-go-back"></i>返回</a></div>
+
+            <div class="nav-warp">
+                <ul>
+                    <li class=""><a href="{% url 'modify_user_info' request.user.userprofile.id %}">修改资料</a></li>
+                    <li class=""><a href="{% url 'modify_account' request.user.id %}">修改密码</a></li>
+                    <li class="active"><a href="{% url 'modify_head_img' request.user.userprofile.id %}">修改头像</a></li>
+                </ul>
+            </div>
+
+            <div class="placeholder-height"></div>
+            <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-warp">
+                    <label class="control-label info_head_img">新的头像：<a class="head-img-file" style="margin-left: 60px">选择文件
+                        {{ head_img_form.head_img }}
+                    </a></label>
+                </div>
+                <input type="submit" class="btn btn-save js-user-section-save " style="margin-top: 400px;" value="保存">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

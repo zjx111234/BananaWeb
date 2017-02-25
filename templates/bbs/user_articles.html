@@ -1,0 +1,81 @@
+{% extends 'bbs/user_detail.html' %}
+{% load custom %}
+{% block user-content %}
+    <div class="user-menu-warp">
+        <div class="menu-warp">
+            <ul>
+                {% if request.user.userprofile.id == user_info.id %}
+                    <li class=""><a href="{% url 'user_detail' request.user.userprofile.id %}">我的消息</a></li>
+                    <li class=""><a href="{% url 'user_comment' request.user.userprofile.id %}">我的评论</a></li>
+                    <li class="active"><a href="{% url 'user_article' request.user.userprofile.id %}">我的文章</a></li>
+                    <li class=""><a href="{% url 'user_draft' request.user.userprofile.id %}">我的草稿</a></li>
+                    <li class=""><a href="{% url 'user_like_article' request.user.userprofile.id %}">赞过的文章</a></li>
+                {% else %}
+                    <li class=""><a href="{% url 'user_comment' request.get_full_path|get_end_arg %}">TA的评论</a></li>
+                    <li class="active"><a href="{% url 'user_article' request.get_full_path|get_end_arg %}">TA的文章</a></li>
+                    <li class=""><a href="{% url 'user_like_article' request.get_full_path|get_end_arg %}">TA赞过的文章</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="user-content-warp">
+
+            <div class="message-box">
+                {% if publish_article_list %}
+                    {% for article in publish_article_list %}
+                        <div class="mod-b mod-art ">
+                            <a class="transition" href="{% url 'article_detail' article.id %}" target="_blank">
+                                <div class="mod-thumb">
+                                    <img class="lazy" src="/static/uploads/{{ article.head_img|truncate_url }}"
+                                         alt="{{ article.title }}">
+                                </div>
+                            </a>
+                            <div class="mob-ctt">
+                                <h3><a href="{% url 'article_detail' article.id %}" class="transition"
+                                       target="_blank">{{ article.title }}</a>
+                                </h3>
+                                <div class="mob-author"><span class="time">{{ article.pub_date|date_format }}</span>
+                                </div>
+                                <div class="mob-sub">{{ article.brief }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <nav class="page-nav">
+                        <ul class="pagination">
+                            <li><a href="?page=1" aria-label="First"><span aria-hidden="true"><i
+                                    class="icon icon-first"></i></span></a></li>
+                            {% if publish_article_list.has_previous %}
+                                <li><a href="?page={{ publish_article_list.previous_page_number }}"
+                                       aria-label="Previous"><span aria-hidden="true"><i
+                                        class="icon icon-lt"></i></span></a></li>
+                            {% else %}
+                                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true"><i
+                                        class="icon icon-lt"></i></span></a></li>
+                            {% endif %}
+                            <li class="active">
+                                <a>
+                                    {{ publish_article_list.number }}
+                                </a>
+                            </li>
+                            {% if publish_article_list.has_next %}
+                                <li><a href="?page={{ publish_article_list.next_page_number }}"> <i
+                                        class="icon icon-gt"></i></a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><a href="#"> <i class="icon icon-gt"></i></a></li>
+                            {% endif %}
+                            <li><a href="?page={{ publish_article_list.paginator.num_pages }}"><i
+                                    class="icon icon-last"></i></a></li>
+                        </ul>
+                    </nav>
+                {% else %}
+                    <div class="no-content-prompt">没写过文章QAQ</div>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

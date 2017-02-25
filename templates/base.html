@@ -8,7 +8,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/static/favicon.ico">
+    <link rel="icon" href="/static/bootstrap/img/logo.jpg">
     <link href="/static/bootstrap/css/screen.css" rel="stylesheet">
     <title>香蕉社区</title>
     <!-- Bootstrap core CSS -->
@@ -24,17 +24,17 @@
     <header id="top" role="banner" class="transition">
     <div class="container">
         <div class="navbar-header transition">
-            <a href="/clbbs" title="首页">
-                <img src="/static/bootstrap/img/logo.png" alt="" title="首页">
+            <a href="/bbs" title="首页">
+                <img src="/static/bootstrap/img/logo.jpg" alt="" title="首页">
             </a>
         </div>
         {% block top-menu %}
         <ul class="nav navbar-nav navbar-left">
             {% for category in category_list %}
                 {% if category.id == category_obj.id %}
-                    <li class="nav-news active"><a href="/clbbs/category/{{ category.id }}" >{{ category.name }}<span class="nums-prompt nums-prompt-topic" style="display: none;"></span></a></li>
+                    <li class="nav-news active"><a href="/bbs/category/{{ category.id }}" >{{ category.name }}<span class="nums-prompt nums-prompt-topic" style="display: none;"></span></a></li>
                 {% else %}
-                    <li class="nav-news "><a href="/clbbs/category/{{ category.id }}" >{{ category.name }}<span class="nums-prompt nums-prompt-topic" style="display: none;"></span></a></li>
+                    <li class="nav-news "><a href="/bbs/category/{{ category.id }}" >{{ category.name }}<span class="nums-prompt nums-prompt-topic" style="display: none;"></span></a></li>
                 {% endif  %}
             {% endfor%}
         </ul>
@@ -42,11 +42,11 @@
         <ul class="nav navbar-nav navbar-right transition">
             <li class="search-li js-show-search-box"><i class="icon icon-search "></i><span>搜索</span></li>
                 {% if request.user.is_authenticated %}
-                    <li class=""><img src="/static/uploads/{{ request.user.userprofile.head_img|truncate_url }}"></li>
-                    <li class="banner-user-name"><a href="#">{{ request.user.userprofile.name }}</a></li>
+                    <li class=""><img src="/static/uploads/{{ request.user.userprofile.head_img|truncate_url }}" style="width:30px;height:30px;" ></li>
+                    <li class="banner-user-name"><a href="{% url 'user_detail' request.user.userprofile.id %}">{{ request.user.userprofile.name }}</a></li>
                     <li class="log-out"><a href="{% url 'logout' %}">注销</a>
                     </li>
-                    <li class="publish-articles "><a href="/clbbs/new_article" class="js-open-contribute transition" >投稿</a></li>
+                    <li class="publish-articles "><a href="/bbs/new_article" class="js-open-contribute transition" >投稿</a></li>
                 {% else %}
                     <li class="login-link-box"><a href="#" class="javascript:void(0);">登录</a></li>
                         <div class="login">
@@ -64,7 +64,7 @@
                              <div class="remind-msg" id="re-msg"></div>
                             <div class="login-button"><a href="javascript:void(0);" id="login-button-submit">登录</a></div>
                         </div>
-                    <li class="register"><a href="/clbbs/register" class="js-register" >注册</a></li>
+                    <li class="register"><a href="/bbs/register" class="js-register" >注册</a></li>
 
                 {% endif  %}
         </ul>

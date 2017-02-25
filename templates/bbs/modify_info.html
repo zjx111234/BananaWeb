@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load custom %}
+{% block page-container %}
+    <div class="edit-warp">
+        <div class="placeholder-height"></div>
+        <div class="user-container" style="min-height: 700px;">
+            <div class="go-back"><a href="{% url 'user_detail' request.user.userprofile.id %}"><i
+                    class="icon icon-go-back"></i>返回</a></div>
+
+            <div class="nav-warp">
+                <ul>
+                    <li class="active"><a href="{% url 'modify_user_info' request.user.userprofile.id %}">修改资料</a></li>
+                    <li class=""><a href="{% url 'modify_account' request.user.id %}">修改密码</a></li>
+                    <li class=""><a href="{% url 'modify_head_img' request.user.userprofile.id %}">修改头像</a></li>
+                </ul>
+            </div>
+            <div class="section-box">
+                <div class="user-face-box">
+                    <img src="/static/uploads/{{ request.user.userprofile.head_img|truncate_url }}"
+                         style="width:80px;height:80px">
+                </div>
+            </div>
+            {% for item in error %}
+                <p class="errors-remind" style="color:red;">{{ item }}</p>
+            {% endfor %}
+            <div class="form-errors">
+                {% for item in user_info_form %}
+                    {{ item.errors }}
+                {% endfor %}
+            </div>
+            <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-warp">
+                    <label class="control-label">昵称</label>
+                    {{ user_info_form.name }}
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">简介</label>
+                    {{ user_info_form.signature }}
+                </div>
+                <div class="form-warp ">
+                    <label class="control-label">真实姓名：</label>
+                    {{ user_info_form.user_real_name }}
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">性别：</label>
+                    <div class="styled-select" id="sex">
+                        {{ user_info_form.sex }}
+                    </div>
+
+                </div>
+                <div class="form-warp ">
+                    <label class="control-label">出生日期：</label>
+                    {{ user_info_form.birth }}
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">星座</label>
+                    {{ user_info_form.star }}
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">所在公司：</label>
+                    {{ user_info_form.company }}
+
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">职位：</label>
+                    {{ user_info_form.profession }}
+                </div>
+                <div class="form-warp">
+                    <label class="control-label">居住地址：</label>
+                    {{ user_info_form.address }}
+                </div>
+
+                <div class="form-warp">
+                    <label class="control-label">手机号码：</label>
+                    {{ user_info_form.mobile_phone }}
+                </div>
+
+
+                <div class="form-warp">
+                    <label class="control-label">微博：</label>
+                    {{ user_info_form.weibo }}
+
+                </div>
+                <input type="submit" class="btn btn-save js-user-section-save" value="保存">
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block bottom-js %}
+    <script type="text/javascript">
+        $(".sex-warp label").click(function () {
+            $(".sex-warp label").removeClass("active");
+            $(this).addClass("active");
+        })
+
+    </script>
+{% endblock %}

@@ -131,6 +131,8 @@
                                 var b = parseInt(a) + 1;
                                 $(".comment-num").text(b);
                                 GetComments(); //alert("post-comment-success");
+                            }else if (callback == 'comment-num-out'){
+                                 alert("歇会吧您！");
                             }
                 })//end post
             }
