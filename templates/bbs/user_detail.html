@@ -79,7 +79,7 @@
             </div>
             <div class="user-content-warp">
                 <ul class="nav-box">
-                    <li class="active"><a href="{% url 'user_detail' request.user.userprofile.id %}">评论回复<span
+                    <li class="active"><a href="{% url 'user_detail' request.get_full_path|get_end_arg %}">评论回复<span
                             class="badge comment_message"></span></a></li>
                     <li><a href="#">系统消息<span class="badge system_message"></span></a>
                     </li>

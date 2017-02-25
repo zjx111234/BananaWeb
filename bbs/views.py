@@ -1,12 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, render_to_response
 from django.contrib.auth import login, logout, authenticate
-
-from django import forms
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from bbs import models, form, add_articles_handler, comment_hander
-import json, datetime, os, random, time, re
+import json, datetime, os, random
 from PIL import Image
 from BananaWeb import settings
 
@@ -54,17 +51,12 @@ def acc_login(request):
         user = authenticate(username=request.POST.get('username'),
                             password=request.POST.get('password'))
         if user is not None:
-            # pass authentication
             login(request, user)
             ret['success'] = 'success'
             request.session['user_comment_count'] = 0
             request.session['user_login_time'] = datetime.datetime.now().strftime("%H %M %S")
-            # print(request.session['user_login_time'].split(' '))
-            # return HttpResponseRedirect(request.GET.get('next') or '/bbs')
             return HttpResponse(json.dumps(ret))
         else:
-            # login_err = "Wrong username or password!"
-            # return (request,'base.html', {'success':login_err})
             ret['success'] = 'failed'
             return HttpResponse(json.dumps(ret))
     return HttpResponseRedirect('/bbs')
@@ -77,13 +69,23 @@ def acc_logout(request):
 
 def article_detail(request, article_id):
     article_obj = models.Article.objects.get(id=article_id)
+    author_id = article_obj.author.id
+    author_article_num = models.Article.objects.filter(id=author_id).count()
+    author_comment_num = models.Comment.objects.filter(id=author_id).count()
+    if not author_comment_num:
+        author_comment_num = 0
     click_count = article_obj.click_count
     article_obj.click_count = click_count + 1
+    priority = article_obj.priority + 1
+    article_obj.priority = priority
     article_obj.save()
     comment_tree = comment_hander.build_tree(article_obj.comment_set.select_related())
     return render(request, 'bbs/article_detail.html', {'article_obj': article_obj,
                                                        'comment_tree': comment_tree,
-                                                       'category_list': category_list})
+                                                       'category_list': category_list,
+                                                       'author_article_num':author_article_num,
+                                                       'author_comment_num':author_comment_num
+                                                       })
 
 
 def comment(request):
@@ -125,6 +127,10 @@ def comment(request):
                 user_obj = models.UserProfile.objects.get(id=request.user.userprofile.id)
                 experience = user_obj.experience + 10
                 user_obj.experience = experience
+                article_obj = models.Article.objects.get(id=request.POST.get('article_id'))
+                priority = article_obj.priority + 5
+                article_obj.priority = priority
+                article_obj.save()
                 user_obj.save()
                 new_comment_obj.save()
                 user_comment_count = request.session['user_comment_count'] + 1
@@ -219,6 +225,8 @@ def register(request):
             user_profile_obj.save()
             user = authenticate(username=username, password=password2)
             login(request, user)
+            request.session['user_comment_count'] = 0
+            request.session['user_login_time'] = datetime.datetime.now().strftime("%H %M %S")
             return HttpResponseRedirect('/bbs')
         user_form = user_data
         return render(request, 'bbs/register.html', {'user_form': user_form,
@@ -408,7 +416,7 @@ def modify_user_info(request, user_id):
 
 
 @login_required
-def modify_account(request, user_id):
+def modify_account(request):
     if request.method == 'GET':
         password_form = form.ChangePwdForm()
         return render(request, 'bbs/modify_account.html', {'password_form': password_form, })
@@ -437,7 +445,6 @@ def modify_head_img(request, user_id):
             return HttpResponseRedirect('/bbs')
     else:
         head_img_form = head_img_form
-
     return render(request, "bbs/modify_head_img.html", {"head_img_form": head_img_form, })
 
 
@@ -452,17 +459,3 @@ class CJsonEncoder(json.JSONEncoder):
             return json.JSONEncoder.default(self, o)
 '''
 
-'''
-  if request.method == 'POST':
-        user_info = form.UserProfile(request.POST)
-        if user_info.is_valid():
-            user_obj = models.UserProfile.get(user__id=user_id)
-            user_obj.mobile_phone = user_info.cleaned_data['mobile_phone']
-            user_obj.company = user_info.cleaned_data['company']
-            user_obj.weibo = user_info.cleaned_data['weibo']
-            user_obj.star = user_info.cleaned_data['star']
-            user_obj.profession = user_info.cleaned_data['profession']
-            user_obj.save()
-            HttpResponseRedirect('/user_detial')
-
-'''
