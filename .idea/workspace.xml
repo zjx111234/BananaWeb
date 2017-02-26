@@ -2,15 +2,142 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5cb95be3-50a7-4617-8664-21ee37bfb330" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/clbbs/server.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/favicon.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/loading1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/loading2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/logo.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/max.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/select_point-blue.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/img/select_point.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/004.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/007.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/124224263393_1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/130112928279.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/133041261600.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/134534024887.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/140351692705.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/141712357911.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/145826858867.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/150553199618.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/153226740064.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/164006672287.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/174318476901.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/180341234876.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/181901718929.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/210033781571.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/uploads/无标题_i88x0mm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/admin.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/form.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0005_auto_20170221_1411.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0006_auto_20170221_1455.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0007_auto_20170221_1558.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0008_auto_20170221_1638.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0009_userprofile_user_real_name.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0010_auto_20170222_1342.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0011_auto_20170223_1324.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0012_auto_20170223_1356.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0013_userprofile_sign_up_time.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/migrations/0014_auto_20170225_1703.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/models.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bbs/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/css/zeroModal.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/js/zeroModal.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/statics/bootstrap/js/zeroModal.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/about.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/modify_account.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/modify_head_img.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/modify_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/user_articles.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/user_comment.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/user_detail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/user_draft.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/bbs/user_like_articles.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources/3a253173-472a-415b-b229-bb009bcab8a3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources/3a253173-472a-415b-b229-bb009bcab8a3/storage.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/clbbs/admin.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/clbbs/form.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/clbbs/views.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/021555985344.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/072449244398.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/072449244398_HgnokoF.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/072449244398_bbMrXLA.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/072449244398_i3rVAOs.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/073002520789.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/074246482973.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/114445371594.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/114657175242.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/115732196103.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/122137313211.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/122137313211_CURgcnC.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/122137313211_CURgcnC_BOLyhcT.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/122137313211_fFeb4gR.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/122137313211_fFeb4gR618.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/131440308882.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/131440308882_77TAhlg.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/131440308882_BsZA1GM.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/131440308882_flSzQz6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/134435489068.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/134435489068_LEYGg48.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/141349738712.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/141349738712_kurta4Z.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/153703038873.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/172326588998.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/174109041268.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/185530637308.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/185647802737.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/210640860312.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/210640860312_AcqeLvw.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/211516107995.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/220246108508.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/GRASS2.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A_3aA3b7z.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A_FzaebmR.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A_LSoCDSr.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A_RO7iXwO.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG0270A_cQaaJrG.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG_0003.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG_0029.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG_0751.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG_0910.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/IMG_1196.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/favicon.ico.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/logoquan13915546574.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/logoquan13915546574_fixEwBZ.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/no-img_kpvYOFy.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/no-img_oSD2Lzm.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/no-img_y52ZPXq.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/statics/uploads/qweqwe.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/185530637308.jpg" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/__init__.py" afterPath="$PROJECT_DIR$/bbs/templatetags/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/add_articles_handler.py" afterPath="$PROJECT_DIR$/bbs/add_articles_handler.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/apps.py" afterPath="$PROJECT_DIR$/bbs/apps.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/comment_hander.py" afterPath="$PROJECT_DIR$/bbs/comment_hander.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/bbs/migrations/0001_initial.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/migrations/0002_auto_20170218_1244.py" afterPath="$PROJECT_DIR$/bbs/migrations/0002_auto_20170218_1244.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/migrations/0003_userprofile_article_like.py" afterPath="$PROJECT_DIR$/bbs/migrations/0003_userprofile_article_like.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/migrations/0004_auto_20170218_2043.py" afterPath="$PROJECT_DIR$/bbs/migrations/0004_auto_20170218_2043-bk.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/migrations/__init__.py" afterPath="$PROJECT_DIR$/bbs/migrations/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/templatetags/__init__.py" afterPath="$PROJECT_DIR$/bbs/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/templatetags/custom.py" afterPath="$PROJECT_DIR$/bbs/templatetags/custom.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/clbbs/tests.py" afterPath="$PROJECT_DIR$/bbs/tests.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/statics/bootstrap/img/logo.png" afterPath="$PROJECT_DIR$/statics/bootstrap/img/logo-1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/bs/spider/scheduler.py" afterPath="$USER_HOME$/bs/spider/scheduler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BananaWeb.iml" afterPath="$PROJECT_DIR$/.idea/BananaWeb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/clbbs/models.py" afterPath="$PROJECT_DIR$/clbbs/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BananaWeb/settings.py" afterPath="$PROJECT_DIR$/BananaWeb/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BananaWeb/urls.py" afterPath="$PROJECT_DIR$/BananaWeb/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/statics/bootstrap/css/custom.css" afterPath="$PROJECT_DIR$/statics/bootstrap/css/custom.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/statics/bootstrap/js/build.js" afterPath="$PROJECT_DIR$/statics/bootstrap/js/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bbs/article_detail.html" afterPath="$PROJECT_DIR$/templates/bbs/article_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bbs/category.html" afterPath="$PROJECT_DIR$/templates/bbs/category.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bbs/index.html" afterPath="$PROJECT_DIR$/templates/bbs/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bbs/new_article.html" afterPath="$PROJECT_DIR$/templates/bbs/new_article.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bbs/register.html" afterPath="$PROJECT_DIR$/templates/bbs/register.html" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/github/pyspider/pyspider/webui/app.py" afterPath="$USER_HOME$/github/pyspider/pyspider/webui/app.py" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
@@ -123,6 +250,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$/bs" />
   </component>
   <component name="HighlightingSettingsPerFile">

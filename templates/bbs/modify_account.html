@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load custom %}
+{% block page-container %}
+    <div class="edit-warp">
+        <div class="placeholder-height"></div>
+        <div class="user-container" style="min-height: 700px;">
+            <div class="go-back"><a href="{% url 'user_detail' request.user.userprofile.id %}"><i
+                    class="icon icon-go-back"></i>返回</a></div>
+            <div class="nav-warp">
+                <ul>
+                    <li class=""><a href="{% url 'modify_user_info' request.user.userprofile.id %}">修改资料</a></li>
+                    <li class="active"><a href="{% url 'modify_account' request.user.id %}">修改密码</a></li>
+                    <li class=""><a href="{% url 'modify_head_img' request.user.userprofile.id %}">修改头像</a></li>
+                </ul>
+            </div>
+            <div class="form-errors">
+                {% for item in password_form %}
+                    {{ item.errors }}
+                {% endfor %}
+            {{ password_form.non_field_errors }}
+            </div>
+                <form method="post" action="{% url 'modify_account' request.user.id %}">{% csrf_token %}
+                    <div class="form-warp">
+                        <label class="control-label">当前密码</label>
+                        {{ password_form.old_password }}
+                    </div>
+                    <div class="form-warp">
+                        <label class="control-label">新密码</label>
+                        {{ password_form.new_password1 }}
+                    </div>
+                    <div class="form-warp">
+                        <label class="control-label">确认密码</label>
+                        {{ password_form.new_password2 }}
+                    </div>
+                    <input type="hidden" name="uid" value="{{request.user.id}}" />
+                    <button class="btn btn-save js-user-section-save">保存</button>
+                </form>
+            </div>
+        </div>
+{% endblock %}

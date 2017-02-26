@@ -10,7 +10,7 @@
                 {% if forloop.counter == 1 %}
                 <div class="big-pic-box">
                     <!--一级banner图-->
-                    <div article_id="{{ article.id }}" class="big-pic">
+                    <div  class="big-pic">
                         <a href="{% url 'article_detail' article.id %}" target="_blank" class="transition" title="{{ article.title }}">
                             <div class="back-img">
                                 <img src="/static/uploads/{{ article.head_img|truncate_url }}" alt="{{ article.title }}" >
@@ -22,7 +22,7 @@
                     </div>
                      {% elif forloop.counter == 2 %}
                     <!--二级banner图-->
-                    <div article_id="{{ article.id }}" class="big2-pic big2-pic-index big2-pic-index-top">
+                    <div  class="big2-pic big2-pic-index big2-pic-index-top">
                         <a href="{% url 'article_detail' article.id %}" class="back-img transition" target="_blank" title="{{ article.title }}">
                             <img class="lazy"  alt="{{ article.title }}" src="/static/uploads/{{ article.head_img|truncate_url }}" style="display: inline;">
                         </a>
@@ -34,7 +34,7 @@
                     </div>
 
                     {% elif forloop.counter == 3 %}
-                    <div article_id="{{ article.id }}" class="big2-pic big2-pic-index big2-pic-index-bottom">
+                    <div  class="big2-pic big2-pic-index big2-pic-index-bottom">
                         <a href="{% url 'article_detail' article.id %}" class="back-img transition" target="_blank" title="{{ article.title }}">
                             <img class="lazy" alt="{{ article.title }}" src="/static/uploads/{{ article.head_img|truncate_url }}" style="display: inline;">
                         </a>
@@ -48,14 +48,14 @@
 
                 {% else %}
 
-                <div article_id="{{ article.id }}" class="article-box">
+                <div class="article-box">
                     <div class="article-head-img col-md-4"style="padding-left: 0px;">
-                        <a href="{% url 'article_detail' article.id %}"><img src="/static/uploads/{{ article.head_img|truncate_url }}"></a>
+                        <a href="{% url 'article_detail' article.id %}" target="_blank" ><img src="/static/uploads/{{ article.head_img|truncate_url }}"></a>
                     </div>
                     <div class="article-brief col-md-8">
-                        <a class="article-title" href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        <a class="article-title" href="{% url 'article_detail' article.id %}" target="_blank">{{ article.title }}</a>
                         <div class="article-brief-info">
-                            <span class="author-name">{{ article.author.name }}</span>
+                            <a href="{% url 'user_comment' article.author.id %}" class="author-name">{{ article.author.name }}</a>
                             <span class="time">{{ article.pub_date|date_format }}</span>
                             <span>{%  filter_comment article as comments %} </span>
                             <i class="icon icon-cmt"></i>
@@ -151,7 +151,7 @@
         $(".add—articles").click(function(){
         var box = $('.add—articles'),page_num = box.attr('data-cur-page')
 
-            $.post("/clbbs/get_articles/{{ category_index }}/",
+            $.post("/bbs/get_articles/{{ category_index }}/",
                 {
                     'page_num':page_num,
                     'csrfmiddlewaretoken':getCsrf()
@@ -159,7 +159,7 @@
                 function (callback) {
                         callback = jQuery.parseJSON(callback);
                         if(callback.success=='success'){
-                            console.log(callback);
+                            //console.log(callback);
                             $(".mod-con").append(callback.data);
                             box.attr('data-cur-page',callback.page_num)
                          }else if(callback.success=='fail-forward'){
