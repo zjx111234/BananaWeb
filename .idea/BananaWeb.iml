@@ -15,10 +15,8 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.5.2 (/usr/bin/python3.5)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="pyspider" />
     <orderEntry type="module" module-name="bs" />
     <orderEntry type="module" module-name="statscv" />
-    <orderEntry type="module" module-name="pyspider" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
