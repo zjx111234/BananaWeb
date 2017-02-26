@@ -8,37 +8,37 @@
         </div>
         <div class="article-title-brief">
             <span class="author-name">作者： {{ article_obj.author.name }}</span>
-             <span class="time"style="margin-left: 15px">{{ article_obj.pub_date }}</span>
-            <span>{%  filter_comment article_obj as comments %} </span>
-                            <i class="icon icon-cmt" style="margin-left: 15px" ></i>
-                            <em class="comment-num">{{ comments.comment_count }}</em>
-                            <i class="icon icon-fvr"></i>
-                            <em class="thumb-num">{{ article_obj.thumb_count }}</em>
+            <span class="time" style="margin-left: 15px">{{ article_obj.pub_date }}</span>
+            <span>{% filter_comment article_obj as comments %} </span>
+            <i class="icon icon-cmt" style="margin-left: 15px"></i>
+            <em class="comment-num">{{ comments.comment_count }}</em>
+            <i class="icon icon-fvr"></i>
+            <em class="thumb-num">{{ article_obj.thumb_count }}</em>
         </div>
         <div class="article-content">
-            <img class="article-detail-head-img"  src="/static/uploads/{{ article_obj.head_img|truncate_url }}">
+            <img class="article-detail-head-img" src="/static/uploads/{{ article_obj.head_img|truncate_url }}">
             <div class="article-content article-content-font">
-            {{ article_obj.content|safe }}
+                {{ article_obj.content|safe }}
             </div>
         </div>
         <div class="Qr-code">
-                <div class="praise-box transition js-like-article center-box " data-type="like">
-                    <div class="praise-box-add"><i class="icon icon-article-zan-add"></i><span>+1</span></div>
-                    <i class="icon icon-article-zan"></i><span class="num-favor">{{ article_obj.thumb_count }}</span>
-                </div>
+            <div class="praise-box transition js-like-article center-box " data-type="like">
+                <div class="praise-box-add"><i class="icon icon-article-zan-add"></i><span>+1</span></div>
+                <i class="icon icon-article-zan"></i><span class="num-favor">{{ article_obj.thumb_count }}</span>
+            </div>
         </div>
         <div class="line-coment"></div>
         <div class="comment-box-title">说点什么？</div>
         <div class="comment-box">
             {% if request.user.is_authenticated %}
                 <div class="new-comment-box">
-                 <textarea class="comment-area" ></textarea>
-                 <button type="button"  class="btn btn-article pull-right">评论</button>
+                    <textarea class="comment-area"></textarea>
+                    <button type="button" class="btn btn-article pull-right">评论</button>
                 </div>
 
             {% else %}
                 <div class="jumbotron">
-                  <h4 class="text-center"><a class="btn-link" href="#">登录</a>后评论</h4>
+                    <h4 class="text-center"><a class="btn-link" href="#">登录</a>后评论</h4>
 
                 </div>
             {% endif %}
@@ -49,7 +49,28 @@
 
     </div>
     <div class="wrap-right">
+        <div class="box-author-info">
+            <div class="author-face">
+                <a href="{% url 'user_comment' article_obj.author.id %}" target="_blank">
+                    <img src="/static/uploads/{{ article_obj.author.head_img|truncate_url }}" style="width:80px;height:80px">
+                </a>
+            </div>
+            <div class="author-name">
+                <a href="{% url 'user_comment' article_obj.author.id %}" target="_blank">{{ article_obj.author }}</a>
 
+            </div>
+            <div class="author-one">{{ article_obj.author.signature }}</div>
+            <div class="author-professional">{{ article_obj.author.profession }}</div>
+            <div class="author-article-pl">
+                <ul>
+                    <li><a href="{% url 'user_article' article_obj.author.id %}"
+                           target="_blank">{{ author_article_num }}篇文章</a></li>
+                    <i class="icon icon-line-face"></i>
+                    <li><a href="{% url 'user_comment' article_obj.author.id %}"
+                           target="_blank">{{ author_comment_num }}个评论</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="clear-both"></div>
 
@@ -57,73 +78,74 @@
 
 
 {% block bottom-js %}
-<script>
-    function GetComments(){
-        $.get("{% url 'get_comments' article_obj.id %}",function(callback){
-            $(".comment-list").html(callback);
+    <script>
 
-            //点击打开内嵌评论框
-            $(".add-comment").click(function(){
-                var new_comment_box_div = "<div class='new-comment-box-in'><textarea class='comment-area' rows='2'></textarea><button type='button' id='new-box-in-submit' class='btn btn-box-submit'>评论</button><button type='button' id='box-close' class='btn btn-box-close'>关闭</button></div>"
-                $(".new-comment-box-in").remove();//删除之前的
-                $(this).parent().append(new_comment_box_div);
+        function GetComments() {
+            $.get("{% url 'get_comments' article_obj.id %}", function (callback) {
+                $(".comment-list").html(callback);
 
-            //关闭内嵌评论框
-            document.getElementById("box-close").onclick=function() {
-                $(this).parent().remove();
-            }
-            //内嵌评论框POST
-            document.getElementById('new-box-in-submit').onclick=function(){
-                var comment_text = $(".new-comment-box-in textarea").val();
-                if (comment_text.trim().length <5){
-                    alert("评论不能少于5个字sb");
-                }else{
+                //点击打开内嵌评论框
+                $(".add-comment").click(function () {
+                    var new_comment_box_div = "<div class='new-comment-box-in'><textarea class='comment-area' rows='2'></textarea><button type='button' id='new-box-in-submit' class='btn btn-box-submit'>评论</button><button type='button' id='box-close' class='btn btn-box-close'>关闭</button></div>"
+                    $(".new-comment-box-in").remove();//删除之前的
+                    $(this).parent().append(new_comment_box_div);
+
+                    //关闭内嵌评论框
+                    document.getElementById("box-close").onclick = function () {
+                        $(this).parent().remove();
+                    };
+                    //内嵌评论框POST
+                    document.getElementById('new-box-in-submit').onclick = function () {
+                        var comment_text = $(".new-comment-box-in textarea").val();
+                        if (comment_text.trim().length < 5) {
+                            zeroModal.alert('请选择数据进行操作!');
+                        } else {
+                            //post
+                            var parent_comment_id = $(this).parent().prev().attr('comment-id');
+                            $.post("{% url 'post_comment' %}",
+                                {
+                                    'comment_type': 1,
+                                    article_id: "{{ article_obj.id }}",
+                                    parent_comment_id: parent_comment_id,
+                                    'comment': comment_text.trim(),
+                                    'csrfmiddlewaretoken': getCsrf()
+                                },//end post args
+                                function (callback) {
+                                    if (callback == 'post-comment-success') {
+                                        $(".new-comment-box-in textarea").val("");
+                                        GetComments();
+                                    }
+                                })//end post
+                        }
+                    }//end button click
+                });
+            });//end get
+        }
+        function getCsrf() {
+            return $("input[name='csrfmiddlewaretoken']").val();
+        }
+
+
+        $(document).ready(function () {
+            GetComments();//页面加载后先把评论加载出来
+            $(".new-comment-box button").click(function () {
+                var comment_text = $(".comment-box textarea").val();
+                if (comment_text.trim().length < 5) {
+                    zeroModal.alert('评论得大于五个字!');
+                } else {
                     //post
                     var parent_comment_id = $(this).parent().prev().attr('comment-id');
                     $.post("{% url 'post_comment' %}",
-                            {
-                                'comment_type':1,
-                                article_id:"{{ article_obj.id }}",
-                                parent_comment_id:parent_comment_id,
-                                'comment':comment_text.trim(),
-                                'csrfmiddlewaretoken':getCsrf()
-                            },//end post args
-                            function(callback){
-                                if (callback == 'post-comment-success'){
-                                    $(".new-comment-box-in textarea").val("");
-                                    GetComments();
-                                }
-                            })//end post
-                    }
-                }//end button click
-            });
-        });//end get
-    }
-    function getCsrf(){
-        return $("input[name='csrfmiddlewaretoken']").val();
-    }
-
-
-    $(document).ready(function(){
-        GetComments();//页面加载后先把评论加载出来
-        $(".new-comment-box button").click(function(){
-            var comment_text = $(".comment-box textarea").val();
-            if (comment_text.trim().length <5){
-                alert("评论不能少于5个字sb");
-            }else{
-                //post
-                var parent_comment_id = $(this).parent().prev().attr('comment-id');
-                $.post("{% url 'post_comment' %}",
                         {
-                            'comment_type':1,
-                            article_id:"{{ article_obj.id }}",
-                            parent_comment_id:parent_comment_id,
-                            'comment':comment_text.trim(),
-                            'csrfmiddlewaretoken':getCsrf()
+                            'comment_type': 1,
+                            article_id: "{{ article_obj.id }}",
+                            parent_comment_id: parent_comment_id,
+                            'comment': comment_text.trim(),
+                            'csrfmiddlewaretoken': getCsrf()
                         },//end post args
-                        function(callback){
+                        function (callback) {
                             //console.log(callback);
-                            if (callback == 'post-comment-success'){
+                            if (callback == 'post-comment-success') {
                                 var new_comment_box_div = $(".new-comment-box").clone(true);
                                 $(".new-comment-box textarea").val("");
                                 //在刷新评论之前,把评论框再放回文章 底部
@@ -131,31 +153,34 @@
                                 var b = parseInt(a) + 1;
                                 $(".comment-num").text(b);
                                 GetComments(); //alert("post-comment-success");
+                            } else if (callback == 'comment-num-out') {
+                                zeroModal.alert('歇会吧您!');
                             }
-                })//end post
-            }
-        });//end button click
-    });
+                        })//end post
+                }
+            });//end button click
+        });
 
 
-    $(document).ready(function(){
-        $(".praise-box").click(function () {
-            $.post("{% url 'add_favor' %}",
-                {
-                  article_id:{{ article_obj.id }},
-                  user_name:"{{ request.user.userprofile.name }}",
-                 'csrfmiddlewaretoken':getCsrf(),
-                },function (callback) {
-                    var obj = jQuery.parseJSON(callback)
-                    if(obj.status=='success') {
-                        var temp = obj.data;
-                        $('.num-favor').text(temp);
-                        $('.thumb-num').text(temp);
-                    }else{
-                        alert("别瞎JB点");}
-                })
-        });//end button click
-    });
+        $(document).ready(function () {
+            $(".praise-box").click(function () {
+                $.post("{% url 'add_favor' %}",
+                    {
+                        article_id:{{ article_obj.id }},
+                        user_name: "{{ request.user.userprofile.name }}",
+                        'csrfmiddlewaretoken': getCsrf(),
+                    }, function (callback) {
+                        var obj = jQuery.parseJSON(callback)
+                        if (obj.status == 'success') {
+                            var temp = obj.data;
+                            $('.num-favor').text(temp);
+                            $('.thumb-num').text(temp);
+                        } else {
+                            zeroModal.error('点一次还不够？');
+                        }
+                    })
+            });//end button click
+        });
 
-</script>
+    </script>
 {% endblock %}

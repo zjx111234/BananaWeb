@@ -7,7 +7,7 @@
 
     function GetArticles() {
         var box = $('.wrap-left'),page_num = box.attr('data-page')
-            $.post("/clbbs/get_articles/{{ category_obj.id }}/",
+            $.post("/bbs/get_articles/{{ category_obj.id }}/",
                 {
                     'page_num':page_num,
                     'csrfmiddlewaretoken':getCsrf()
