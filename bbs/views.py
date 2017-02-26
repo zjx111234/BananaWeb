@@ -236,7 +236,7 @@ def register(request):
 def get_new_article_num(request):
     page_article_num = request.GET.get('last_num')
     if page_article_num:
-        db_article_num = models.Article.objects.count()
+        db_article_num = models.Article.objects.filter(status='published').count()
         new_article_num = db_article_num - int(page_article_num)
     else:
         new_article_num = 0

@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^user_detail/(\d+)$', views.user_comment_reply, name="user_detail"),
     url(r'^modify_draft/(\d+)$', views.modify_draft, name="modify_draft"),
     url(r'^modify_user_info/(\d+)$', views.modify_user_info, name="modify_user_info"),
-    url(r'^modify_account/(\d+)$', views.modify_account, name="modify_account"),
+    url(r'^modify_account/$', views.modify_account, name="modify_account"),
     url(r'^modify_head_img/(\d+)$', views.modify_head_img, name="modify_head_img"),
     url(r'^about/$', views.about_us, name="about"),
 ]

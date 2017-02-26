@@ -80,18 +80,17 @@ class ChangePwdForm(forms.Form):
 
 
 class UserProfileModelForm(ModelForm):
-    class Meta:
-        model = models.UserProfile
-        exclude = (
-            'user', 'user_level', 'experience', 'user_level', 'article_like', 'friends', 'sign_up_time', 'head_img')
-
     def __init__(self, *args, **kwargs):
         super(UserProfileModelForm, self).__init__(*args, **kwargs)
         for field_name in self.base_fields:
             field = self.base_fields[field_name]
             field.widget.attrs.update({'class': 'control-input'})
-
         self.base_fields['birth'].error_messages = {'invalid': '日期格式错误'}
+
+    class Meta:
+        model = models.UserProfile
+        exclude = (
+            'user', 'user_level', 'experience', 'user_level', 'article_like', 'friends', 'sign_up_time', 'head_img')
 
 
 class UserForm(forms.Form):

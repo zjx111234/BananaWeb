@@ -9,7 +9,7 @@
             <div class="nav-warp">
                 <ul>
                     <li class=""><a href="{% url 'modify_user_info' request.user.userprofile.id %}">修改资料</a></li>
-                    <li class="active"><a href="{% url 'modify_account' request.user.id %}">修改密码</a></li>
+                    <li class="active"><a href="{% url 'modify_account'%}">修改密码</a></li>
                     <li class=""><a href="{% url 'modify_head_img' request.user.userprofile.id %}">修改头像</a></li>
                 </ul>
             </div>
@@ -19,7 +19,7 @@
                 {% endfor %}
             {{ password_form.non_field_errors }}
             </div>
-                <form method="post" action="{% url 'modify_account' request.user.id %}">{% csrf_token %}
+                <form method="post" action="{% url 'modify_account' %}">{% csrf_token %}
                     <div class="form-warp">
                         <label class="control-label">当前密码</label>
                         {{ password_form.old_password }}

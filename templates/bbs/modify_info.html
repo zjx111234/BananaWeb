@@ -10,7 +10,7 @@
             <div class="nav-warp">
                 <ul>
                     <li class="active"><a href="{% url 'modify_user_info' request.user.userprofile.id %}">修改资料</a></li>
-                    <li class=""><a href="{% url 'modify_account' request.user.id %}">修改密码</a></li>
+                    <li class=""><a href="{% url 'modify_account' %}">修改密码</a></li>
                     <li class=""><a href="{% url 'modify_head_img' request.user.userprofile.id %}">修改头像</a></li>
                 </ul>
             </div>
