@@ -79,6 +79,7 @@
 
 {% block bottom-js %}
     <script>
+
         function GetComments() {
             $.get("{% url 'get_comments' article_obj.id %}", function (callback) {
                 $(".comment-list").html(callback);
@@ -92,12 +93,12 @@
                     //关闭内嵌评论框
                     document.getElementById("box-close").onclick = function () {
                         $(this).parent().remove();
-                    }
+                    };
                     //内嵌评论框POST
                     document.getElementById('new-box-in-submit').onclick = function () {
                         var comment_text = $(".new-comment-box-in textarea").val();
                         if (comment_text.trim().length < 5) {
-                            alert("评论不能少于5个字sb");
+                            zeroModal.alert('请选择数据进行操作!');
                         } else {
                             //post
                             var parent_comment_id = $(this).parent().prev().attr('comment-id');
@@ -130,7 +131,7 @@
             $(".new-comment-box button").click(function () {
                 var comment_text = $(".comment-box textarea").val();
                 if (comment_text.trim().length < 5) {
-                    alert("评论不能少于5个字sb");
+                    zeroModal.alert('评论得大于五个字!');
                 } else {
                     //post
                     var parent_comment_id = $(this).parent().prev().attr('comment-id');
@@ -153,7 +154,7 @@
                                 $(".comment-num").text(b);
                                 GetComments(); //alert("post-comment-success");
                             } else if (callback == 'comment-num-out') {
-                                alert("歇会吧您！");
+                                zeroModal.alert('歇会吧您!');
                             }
                         })//end post
                 }
@@ -175,7 +176,7 @@
                             $('.num-favor').text(temp);
                             $('.thumb-num').text(temp);
                         } else {
-                            alert("别瞎JB点");
+                            zeroModal.error('点一次还不够？');
                         }
                     })
             });//end button click

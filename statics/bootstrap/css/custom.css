@@ -369,12 +369,11 @@ body {
     color: #0c0c0c;
 }
 
-.login-title span {
+.del-draft,.login-title span {
     position: absolute;
     font-size: 12px;
     right: 0;
     top: -15px;
-    background: #ffffff;
     width: 40px;
     height: 40px;
     background-image: url(../img/icon_login.png);
@@ -1614,7 +1613,45 @@ img:hover {
 .box-author-info .author-article-pl ul li {
     float: left;
 }
+
 .icon-line-face {
     background-position: -159px -5px;
     float: left;
+}
+
+footer .copy-right, footer .copy-right span a {
+    color: #707682;
+    font-size: 12px;
+}
+
+footer .copy-right {
+    margin-top: 60px;
+    position: absolute;
+    z-index: 400;
+    margin-left: 100px;
+}
+
+footer .footer-tag-list a {
+    font-size: 14px;
+    margin-right: 15px;
+}
+
+footer .copy-right a {
+    height: 40px;
+    color: #6b6e81;
+}
+
+footer .copy-right span {
+    line-height: 28px;
+    margin-bottom: 30px;
+    display: block;
+    margin-top: 10px;
+}
+
+.team-intro {
+    font-size: 80px;
+    text-align: center;
+    padding-top: 200px;
+    padding-bottom: 250px;
+
 }

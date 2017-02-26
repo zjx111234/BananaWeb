@@ -50,10 +50,10 @@
 
                 <div class="article-box">
                     <div class="article-head-img col-md-4"style="padding-left: 0px;">
-                        <a href="{% url 'article_detail' article.id %}"><img src="/static/uploads/{{ article.head_img|truncate_url }}"></a>
+                        <a href="{% url 'article_detail' article.id %}" target="_blank" ><img src="/static/uploads/{{ article.head_img|truncate_url }}"></a>
                     </div>
                     <div class="article-brief col-md-8">
-                        <a class="article-title" href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        <a class="article-title" href="{% url 'article_detail' article.id %}" target="_blank">{{ article.title }}</a>
                         <div class="article-brief-info">
                             <a href="{% url 'user_comment' article.author.id %}" class="author-name">{{ article.author.name }}</a>
                             <span class="time">{{ article.pub_date|date_format }}</span>

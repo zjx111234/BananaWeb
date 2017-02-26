@@ -16,7 +16,7 @@ category_list = models.Category.objects.filter(set_as_top_menu=True).order_by('p
 def index(request):
     # category_obj = models.Category.objects.get(position_index=1)
     articles_list = models.Article.objects.filter(status='published').order_by('-priority')[0:6]
-    article_count = models.Article.objects.count()
+    article_count = models.Article.objects.filter(status='published').count()
     return render(request, 'bbs/index.html', {'category_list': category_list,
                                               'article_list': articles_list,
                                               'category_index': 1,
@@ -83,8 +83,8 @@ def article_detail(request, article_id):
     return render(request, 'bbs/article_detail.html', {'article_obj': article_obj,
                                                        'comment_tree': comment_tree,
                                                        'category_list': category_list,
-                                                       'author_article_num':author_article_num,
-                                                       'author_comment_num':author_comment_num
+                                                       'author_article_num': author_article_num,
+                                                       'author_comment_num': author_comment_num
                                                        })
 
 
@@ -345,6 +345,15 @@ def modify_draft(request, draft_id):
             return render(request, 'bbs/new_article.html', {'article_form': article_form})
 
 
+def del_draft(request, article_id):
+    if request.method == 'GET':
+        try:
+            models.Article.objects.get(id=article_id).delete()
+            return HttpResponse('success')
+        except Exception as e:
+            return HttpResponse(e)
+
+
 def user_like_article(request, user_id):
     user_obj = models.UserProfile.objects.get(id=user_id)
     user_like_articles = user_obj.article_like.all().order_by('pub_date')
@@ -448,6 +457,10 @@ def modify_head_img(request, user_id):
     return render(request, "bbs/modify_head_img.html", {"head_img_form": head_img_form, })
 
 
+def about_us(request):
+    return render_to_response('bbs/about.html', {})
+
+
 '''
 class CJsonEncoder(json.JSONEncoder):
     def default(self, o):
@@ -458,4 +471,3 @@ class CJsonEncoder(json.JSONEncoder):
         else:
             return json.JSONEncoder.default(self, o)
 '''
-

@@ -83,14 +83,14 @@ def articles_generate_html(re, obj_list):
         pub_date = custom.date_format(obj.pub_date)
         comment_count = str(comments['comment_count'])
         thumb_count = obj.thumb_count
-        img_a = "<a href='/bbs/article_detail/" + str(obj.id) + " '>"
+        img_a = "<a href='/bbs/article_detail/" + str(obj.id) + " ' target='_blank'>"
         ele = "<div article_id='%d' class='article-box'>" % obj.id + \
               "<div class='article-head-img col-md-4' style='padding-left: 0px;'>" + img_a + \
-              " <img src='/static/uploads/%s'>" % img_name + "</div></a>" + \
+              " <img src='/static/uploads/%s' >" % img_name + "</div></a>" + \
               "<div class='article-brief col-md-8'><a class='article-title' href='/bbs/article_detail/" + str(obj.id) +\
-              "'>" + "%s</a>" % obj.title + \
-              "<div class ='article-brief-info' ><a href='/bbs/user_detail/" + str(obj.author.id) + \
-              "' class='author-name'>%s</a > " % obj.author.name + \
+              "' target='_blank' >" + "%s</a>" % obj.title + \
+              "<div class ='article-brief-info' ><a href='/bbs/user_comment/" + str(obj.author.id) + \
+              "' class='author-name' target='_blank' >%s</a > " % obj.author.name + \
               "<span class='time' >%s</span>" % pub_date + \
               "<i class='icon icon-cmt'></i><em>%s</em>" % comment_count + \
               "<i class='icon icon-fvr'></i><em>%s</em></div>" % thumb_count + \
