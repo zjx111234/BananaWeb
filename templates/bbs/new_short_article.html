@@ -8,12 +8,12 @@
         </div>
         <div class="nav-warp">
                 <ul>
-                    <li class="active"><a href="{% url 'new_article'  %}">博文</a></li>
-                    <li class=""><a href="{% url 'new_short_article' %}">段子</a></li>
+                    <li class=""><a href="{% url 'new_article'  %}">博文</a></li>
+                    <li class="active"><a href="{% url 'new_short_article' %}">段子</a></li>
                     <li class=""><a href="#">美图</a></li>
                 </ul>
-            </div>
-        {% for item in article_form %}
+        </div>
+         {% for item in short_article_form %}
             <p class="errors-remind" style="color:red;">{{ item.errors }}</p>
         {% endfor %}
         <form method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -22,48 +22,34 @@
                 <ul>
                     <li>
                         <label>
-                            {{ article_form.title }}
+                            {{ short_article_form.title }}
                         </label>
                     </li>
                 </ul>
             </div>
 
             <div class="tg-info-box">
-                <div class="new-article-title">文章简介</div>
-                <ul>
-                    <li>
-                        <label>
-                            {{ article_form.brief }}
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            <div class="tg-info-box">
                 <div class="new-article-title">内容</div>
                 <div class="space-white"></div>
-                {{ article_form.content }}
+                {{ short_article_form.content }}
             </div>
             <div class="tg-info-box">
-                <div class="new-article-title">分类</div>
+                <div class="new-article-title">标签</div>
                 <ul>
                     <li>
                         <label>
-                            <div class="styled-select">{{ article_form.category }}</div>
+                            <div class="styled-select">{{ short_article_form.tag }}</div>
                         </label>
                     </li>
                 </ul>
             </div>
-            <div class="tg-info-box">
-                <div class="new-article-title">上传图片</div>
-                <div class="space-white"></div>
-                <a class="head-img-file">选择文件{{ article_form.head_img }}</a>
-            </div>
+
             <div class="tg-info-box">
                 <div class="new-article-title">状态</div>
                 <ul>
                     <li>
                         <label>
-                            <div class="styled-select">{{ article_form.status }}</div>
+                            <div class="styled-select">{{ short_article_form.status }}</div>
                         </label>
                     </li>
                 </ul>
@@ -74,16 +60,8 @@
         </form>
 
     </div>
-    <div class="clear-both">
+     <div class="clear-both">
 
     </div>
     </body>
-{% endblock %}
-{% block bottom-js %}
-    <script src="/static/plugins/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript">
-        CKEDITOR.replace('id_content');
-
-    </script>
-{% endblock %}
-
+{% endblock%}

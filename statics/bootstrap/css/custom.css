@@ -6,13 +6,13 @@
 }
 
 .wrap-left {
-    width: 70%;
+    width: 800px;
     float: left;
     margin-top: 90px;
 }
 
 .wrap-right {
-    width: 30%;
+    width: 340px;
     float: left;
     margin-top: 90px;
 
@@ -369,7 +369,7 @@ body {
     color: #0c0c0c;
 }
 
-.del-draft,.login-title span {
+.del-draft, .login-title span {
     position: absolute;
     font-size: 12px;
     right: 0;
@@ -945,6 +945,7 @@ img:hover {
 .tg-top-info-warp .title {
     position: relative;
     top: -23px;
+    margin-right: 60px;
     padding: 0 30px;
     font-size: 28px;
     background: #F5F5F5;
@@ -1430,19 +1431,44 @@ img:hover {
     border-bottom: 1px solid #F0F0F0;
 }
 
+.wrap-left .nav-warp {
+    height: 85px;
+    border-bottom: 1px solid #F0F0F0;
+}
+
 .edit-warp .nav-warp ul {
     width: 480px;
     margin: 0 auto;
     height: 100%;
 }
 
+.wrap-left .nav-warp ul {
+    width: 480px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+
 .edit-warp .nav-warp ul li.active {
     color: #333;
-    border-bottom: 2px solid #3ca5f6;
+    border-bottom: 2px solid #f63756;
+}
+.wrap-left .nav-warp ul li.active {
+    color: #333;
+    border-bottom: 2px solid #f63756;
 }
 
 .edit-warp .nav-warp ul li {
     width: 120px;
+    margin-right: 60px;
+    text-align: center;
+    font-size: 18px;
+    height: 100%;
+    float: left;
+    padding-top: 40px;
+}
+.wrap-left .nav-warp ul li {
+    width: 100px;
     margin-right: 60px;
     text-align: center;
     font-size: 18px;
@@ -1653,5 +1679,120 @@ footer .copy-right span {
     text-align: center;
     padding-top: 200px;
     padding-bottom: 250px;
+
+}
+
+.story-box-warp {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 40px;
+    overflow: auto;
+}
+
+.story-box-warp ul li:first-child {
+    padding-top: 0;
+}
+
+.story-box-warp ul li {
+    padding: 11px 10px 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.story-box-warp ul li .story-content .story-title p {
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 9px;
+    font-size: 16px;
+    color: #333;
+    line-height: 28px;
+    position: relative;
+}
+
+.icon-caret {
+    position: absolute;
+    background-position: -211px -720px;
+    right: 5px;
+    top: 13px;
+}
+
+
+.story-box-warp ul .story-time {
+    position: relative;
+    width: 100%;
+}
+
+.story-box-warp ul li .story-content .story-time p.time {
+    float: left;
+    color: #bbb;
+}
+
+.story-box-warp ul li p {
+    padding: 0 20px;
+}
+.story-box-warp ul li .story-content .story-time p {
+    padding-bottom: 5px;
+    line-height: 39px;
+}
+
+.story-box-warp ul li .story-content p {
+    font-size: 14px;
+    color: #777;
+    line-height: 24px;
+}
+
+.story-box-warp ul li .story-content .story-time .article-type {
+    position: absolute;
+    right: -5px;
+
+}
+
+.article-type {
+    color: #bbb;
+}
+
+.story-box-warp ul li .story-content .story-time .icon-like-prompt {
+    padding-left: 8px;
+}
+
+.icon-like-prompt {
+    position: absolute;
+    opacity: 0;
+    margin-top: -13px;
+}
+
+.agree-count{
+    margin-right: 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+.js-more-story {
+    line-height: 20px;
+    text-align: center;
+    color: #bbb;
+    padding-bottom: 10px;
+}
+
+.box-moder {
+    background-color: #fafafa;
+    width: 350px;
+}
+.story-box-warp ul li .story-content .story-title {
+    cursor: pointer;
+}
+
+.icon-like {
+    background-position: -220px -173px;
+    cursor: pointer;
+    width: 25px;
+}
+.story-box-warp ul li:last-child {
+    border: none;
+}
+.story-box-warp ul li .story-content .story-time p.short-tag{
+    font-size: 12px;
+    color: #bbb;
 
 }

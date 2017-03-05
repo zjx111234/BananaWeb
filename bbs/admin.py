@@ -16,7 +16,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'set_as_top_menu', 'position_index')
 
 
+class ShortArticlesAdmin(admin.ModelAdmin):
+    list_display = ('pub_date',)
+
+
 admin.site.register(models.Article, ArticleAdmin)
 admin.site.register(models.Comment, CommentAdmin)
 admin.site.register(models.UserProfile)
+admin.site.register(models.ShortArticles,)
 admin.site.register(models.Category, CategoryAdmin)

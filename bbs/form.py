@@ -29,6 +29,19 @@ class ArticleModelForm(ModelForm):
             field.widget.attrs.update({'class': class_name})
 
 
+class ShortArticleModelForm(ModelForm):
+    class Meta:
+        model = models.ShortArticles
+        exclude = ('author', 'pub_date', 'priority', 'thumb_count', 'disgusting_count')
+    def __init__(self, *args, **kwargs):
+        super(ShortArticleModelForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs['placeholder'] = '请输入标题'
+        for field_name in self.base_fields:
+            field = self.base_fields[field_name]
+            class_name = 'publish-' + field_name
+            field.widget.attrs.update({'class': class_name})
+
+
 class ChangePwdForm(forms.Form):
     uid = forms.CharField(widget=forms.HiddenInput())
     old_password = forms.CharField(

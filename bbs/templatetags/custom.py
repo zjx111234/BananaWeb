@@ -4,7 +4,7 @@
 
 from django import template
 from django.utils.html import format_html
-import datetime,time,re
+import datetime, time, re
 
 register = template.Library()
 
@@ -19,7 +19,7 @@ def filter_comment(article_obj):
     query_set = article_obj.comment_set.select_related()
     comments = {
         'comment_count': query_set.filter(comment_type=1).count(),
-        #'thumb_count': query_set.filter(comment_type=2).count(),
+        # 'thumb_count': query_set.filter(comment_type=2).count(),
     }
     return comments
 
@@ -32,9 +32,9 @@ def date_format(obj):
         pub_datetime = obj.strftime("%Y-%m-%d %H:%M:%S")
         now_datetime = re.split('-|:| ', now_datetime)
         pub_datetime = re.split('-|:| ', pub_datetime)
-        time_diff = [int(now_datetime[i])-int(pub_datetime[i]) for i in range(len(pub_datetime))]
+        time_diff = [int(now_datetime[i]) - int(pub_datetime[i]) for i in range(len(pub_datetime))]
         if time_diff[0] > 0:
-            return str(time_diff[0])+"年前"
+            return str(time_diff[0]) + "年前"
         elif time_diff[1] > 0:
             return str(time_diff[1]) + "月前"
         elif time_diff[2] > 0:
@@ -46,9 +46,8 @@ def date_format(obj):
         else:
             return '刚刚'
 
+
 @register.filter
 def get_end_arg(obj):
     arg = obj.split('/')[-1]
     return arg
-
-

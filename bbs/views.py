@@ -17,10 +17,12 @@ def index(request):
     # category_obj = models.Category.objects.get(position_index=1)
     articles_list = models.Article.objects.filter(status='published').order_by('-priority')[0:6]
     article_count = models.Article.objects.filter(status='published').count()
+    short_articles = models.ShortArticles.objects.all().order_by('-priority')[0:6]
     return render(request, 'bbs/index.html', {'category_list': category_list,
                                               'article_list': articles_list,
                                               'category_index': 1,
                                               'article_count': article_count,
+                                              'short_articles': short_articles,
                                               })
 
 
@@ -28,20 +30,25 @@ def category(request, category_id):
     category_obj = models.Category.objects.get(id=category_id)
     if category_obj.position_index == 1:
         articles_list = models.Article.objects.filter(status='published').order_by('-priority')[0:6]
+        short_articles = models.ShortArticles.objects.filter(status='published').order_by('-priority')[0:6]
         return render(request, 'bbs/index.html', {'category_list': category_list,
                                                   'article_list': articles_list,
+                                                  'short_articles': short_articles,
                                                   'category_index': 1,
                                                   })
     elif category_obj.position_index == 2:
         articles_list = models.Article.objects.filter(status='published').order_by('pub_date').reverse()[0:6]
+        short_articles = models.ShortArticles.objects.filter(status='published').order_by('pub_date').reverse()[0:6]
         return render(request, 'bbs/category.html', {'category_list': category_list,
                                                      'article_list': articles_list,
+                                                     'short_articles': short_articles,
                                                      'category_obj': category_obj})
     else:
-        articles_list = models.Article.objects.filter(status='published', category_id=category_id).order_by(
-            '-priority')[0:6]
+        articles_list = models.Article.objects.filter(status='published', category_id=category_id).order_by('-priority')[0:6]
+        short_articles = models.ShortArticles.objects.filter(status='published').order_by('-priority')[0:6]
         return render(request, 'bbs/category.html', {'category_list': category_list,
                                                      'article_list': articles_list,
+                                                     'short_articles': short_articles,
                                                      'category_obj': category_obj})
 
 
@@ -186,6 +193,43 @@ def new_article(request):
             return render(request, 'bbs/new_article.html', {'article_form': article_form})
 
 
+@login_required
+def new_short_article(request):
+    if request.method == 'GET':
+        short_article_form = form.ShortArticleModelForm()
+        return render(request, 'bbs/new_short_article.html', {'short_article_form': short_article_form})
+    elif request.method == 'POST':
+        short_article_form = form.ShortArticleModelForm(request.POST)
+        if short_article_form.is_valid():
+            data = short_article_form.cleaned_data
+            data['author_id'] = request.user.userprofile.id
+            data['pub_date'] = datetime.datetime.now()
+            article_obj = models.ShortArticles(**data)
+            user_obj = models.UserProfile.objects.get(id=data['author_id'])
+            experience = user_obj.experience + 50
+            user_obj.experience = experience
+            user_obj.save()
+            article_obj.save()
+            return HttpResponseRedirect('/bbs')
+        else:
+            return render(request, 'bbs/new_short_article.html', {'short_article_form': short_article_form})
+
+
+@login_required
+def get_more_short_articles(request):
+    if request.method == 'POST':
+        category_id = request.POST.get('category_id')
+        if category_id == '2':
+            print(category_id)
+            short_articles_list = models.ShortArticles.objects.filter(status='published').order_by('pub_date').reverse()
+            ret = add_articles_handler.short_articles_generate_html(request, short_articles_list)
+            return HttpResponse(json.dumps(ret))
+        else:
+            short_articles_list = models.ShortArticles.objects.filter(status='published').order_by('-priority')
+            ret = add_articles_handler.short_articles_generate_html(request, short_articles_list)
+            return HttpResponse(json.dumps(ret))
+
+
 def image_handler(img_cls):
     url = ''
     if img_cls:
@@ -264,6 +308,33 @@ def add_favor(request):
             article_obj.priority = priority
             article_obj.save()
 
+            ret['status'] = 'success'
+            ret['data'] = thumb_num
+        else:
+            ret['status'] = 'fail'
+    return HttpResponse(json.dumps(ret))
+
+
+@login_required
+def short_article_add_favor(request):
+    ret = {'status': '', 'data': '', 'message': ''}
+    if request.method == 'POST':
+        short_article_id = request.POST.get('short_article_id')
+        user_name = request.POST.get('user_name')
+        short_article_obj = models.ShortArticles.objects.get(id=short_article_id)
+        user_obj = models.UserProfile.objects.get(name=user_name)
+        user_like_articles = user_obj.short_article_like.all()
+        if short_article_obj not in user_like_articles:
+            article_like_obj = models.ShortArticles.objects.filter(id__in=[short_article_id])
+            user_obj.short_article_like.add(*article_like_obj)
+            experience = user_obj.experience + 5
+            user_obj.experience = experience
+            user_obj.save()
+            thumb_num = short_article_obj.thumb_count + 1
+            short_article_obj.thumb_count = thumb_num
+            priority = short_article_obj.priority + 5
+            short_article_obj.priority = priority
+            short_article_obj.save()
             ret['status'] = 'success'
             ret['data'] = thumb_num
         else:
