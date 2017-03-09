@@ -13,9 +13,12 @@
                     <li class=""><a href="#">美图</a></li>
                 </ul>
         </div>
-         {% for item in short_article_form %}
-            <p class="errors-remind" style="color:red;">{{ item.errors }}</p>
-        {% endfor %}
+            <div class="form-errors" style="margin-top: 10px;">
+                {% for item in short_article_form %}
+                    {{ item.errors }}
+                {% endfor %}
+            {{ short_article_form.non_field_errors }}
+            </div>
         <form method="post" enctype="multipart/form-data">{% csrf_token %}
             <div class="tg-info-box">
                 <div class="new-article-title">文章标题</div>

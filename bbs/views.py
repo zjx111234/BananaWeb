@@ -44,7 +44,8 @@ def category(request, category_id):
                                                      'short_articles': short_articles,
                                                      'category_obj': category_obj})
     else:
-        articles_list = models.Article.objects.filter(status='published', category_id=category_id).order_by('-priority')[0:6]
+        articles_list = models.Article.objects.filter(status='published', category_id=category_id).order_by(
+            '-priority')[0:6]
         short_articles = models.ShortArticles.objects.filter(status='published').order_by('-priority')[0:6]
         return render(request, 'bbs/category.html', {'category_list': category_list,
                                                      'article_list': articles_list,
@@ -362,11 +363,24 @@ def user_information(request, user_id):
 
 def user_article(request, user_id):
     publish_article_list = models.Article.objects.filter(author__id=user_id).order_by('pub_date')
+    article_count = publish_article_list.count()
     one_page_articles = add_articles_handler.page_handler(request, publish_article_list)
     user_info = user_information(request, user_id)
     return render(request, 'bbs/user_articles.html', {'publish_article_list': one_page_articles,
                                                       'user_info': user_info,
-                                                      'current_user_id': user_id})
+                                                      'current_user_id': user_id,
+                                                      'article_count': article_count})
+
+
+def user_short_articles(request, user_id):
+    publish_article_list = models.ShortArticles.objects.filter(author__id=user_id).order_by('pub_date')
+    article_count = publish_article_list.count()
+    one_page_articles = add_articles_handler.page_handler(request, publish_article_list)
+    user_info = user_information(request, user_id)
+    return render(request, 'bbs/user_short_articles.html', {'publish_article_list': one_page_articles,
+                                                            'user_info': user_info,
+                                                            'current_user_id': user_id,
+                                                            'article_count': article_count})
 
 
 def user_comment(request, user_id):
@@ -383,12 +397,26 @@ def user_comment(request, user_id):
 
 def user_draft(request, user_id):
     draft_list = models.Article.objects.filter(status='draft', author__id=user_id).order_by('pub_date')
+    draft_count = draft_list.count()
     one_page_draft = add_articles_handler.page_handler(request, draft_list)
     user_info = user_information(request, user_id)
     return render(request, 'bbs/user_draft.html', {'draft_list': one_page_draft,
                                                    'user_info': user_info,
-                                                   'current_user_id': user_id
+                                                   'current_user_id': user_id,
+                                                   'draft_count': draft_count,
                                                    })
+
+
+def user_short_draft(request, user_id):
+    draft_list = models.ShortArticles.objects.filter(status='draft', author__id=user_id).order_by('pub_date')
+    draft_count = draft_list.count()
+    one_page_draft = add_articles_handler.page_handler(request, draft_list)
+    user_info = user_information(request, user_id)
+    return render(request, 'bbs/user_short_draft.html', {'draft_list': one_page_draft,
+                                                         'user_info': user_info,
+                                                         'current_user_id': user_id,
+                                                         'draft_count': draft_count,
+                                                         })
 
 
 @login_required
@@ -416,6 +444,32 @@ def modify_draft(request, draft_id):
             return render(request, 'bbs/new_article.html', {'article_form': article_form})
 
 
+@login_required
+def modify_short_draft(request, draft_id):
+    if request.method == 'GET':
+        draft = models.ShortArticles.objects.get(id=draft_id)
+        data = model_to_dict(draft)
+        short_article_form = form.ShortArticleModelForm(data)
+        return render(request, 'bbs/new_short_article.html', {'short_article_form': short_article_form})
+    elif request.method == 'POST':
+        short_article_form = form.ShortArticleModelForm(request.POST, request.FILES)
+        if short_article_form.is_valid():
+            data = short_article_form.cleaned_data
+            data['author_id'] = request.user.userprofile.id
+            data['pub_date'] = datetime.datetime.now()
+            article_obj = models.ShortArticles(**data)
+            user_obj = models.UserProfile.objects.get(id=data['author_id'])
+            experience = user_obj.experience + 100
+            user_obj.experience = experience
+            models.ShortArticles.objects.get(id=draft_id).delete()
+            article_obj.save()
+            user_obj.save()
+            return HttpResponseRedirect('/bbs')
+        else:
+            return render(request, 'bbs/new_short_article.html', {'short_article_form': short_article_form})
+
+
+@login_required
 def del_draft(request, article_id):
     if request.method == 'GET':
         try:
@@ -425,15 +479,40 @@ def del_draft(request, article_id):
             return HttpResponse(e)
 
 
+@login_required
+def del_short_draft(request, article_id):
+    if request.method == 'GET':
+        try:
+            models.ShortArticles.objects.get(id=article_id).delete()
+            return HttpResponse('success')
+        except Exception as e:
+            return HttpResponse(e)
+
+
 def user_like_article(request, user_id):
     user_obj = models.UserProfile.objects.get(id=user_id)
     user_like_articles = user_obj.article_like.all().order_by('pub_date')
+    article_count = user_like_articles.count()
     one_page_like_articles = add_articles_handler.page_handler(request, user_like_articles)
     user_info = user_information(request, user_id)
     return render(request, 'bbs/user_like_articles.html', {'user_like_articles': one_page_like_articles,
                                                            'current_user_id': user_id,
                                                            'user_info': user_info,
+                                                           'article_count': article_count,
                                                            })
+
+
+def user_like_short_articles(request, user_id):
+    user_obj = models.UserProfile.objects.get(id=user_id)
+    user_like_articles = user_obj.short_article_like.all().order_by('pub_date')
+    article_count = user_like_articles.count()
+    one_page_like_articles = add_articles_handler.page_handler(request, user_like_articles)
+    user_info = user_information(request, user_id)
+    return render(request, 'bbs/user_like_short_articles.html', {'user_like_articles': one_page_like_articles,
+                                                                 'current_user_id': user_id,
+                                                                 'user_info': user_info,
+                                                                 'article_count': article_count,
+                                                                })
 
 
 def user_comment_reply(request, user_id):
@@ -530,6 +609,10 @@ def modify_head_img(request, user_id):
 
 def about_us(request):
     return render_to_response('bbs/about.html', {})
+
+
+def search(request):
+    return render_to_response('bbs/search.html', {})
 
 
 '''

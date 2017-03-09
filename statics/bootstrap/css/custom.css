@@ -1448,11 +1448,11 @@ img:hover {
     height: 100%;
 }
 
-
 .edit-warp .nav-warp ul li.active {
     color: #333;
     border-bottom: 2px solid #f63756;
 }
+
 .wrap-left .nav-warp ul li.active {
     color: #333;
     border-bottom: 2px solid #f63756;
@@ -1467,6 +1467,7 @@ img:hover {
     float: left;
     padding-top: 40px;
 }
+
 .wrap-left .nav-warp ul li {
     width: 100px;
     margin-right: 60px;
@@ -1715,7 +1716,6 @@ footer .copy-right span {
     top: 13px;
 }
 
-
 .story-box-warp ul .story-time {
     position: relative;
     width: 100%;
@@ -1729,6 +1729,7 @@ footer .copy-right span {
 .story-box-warp ul li p {
     padding: 0 20px;
 }
+
 .story-box-warp ul li .story-content .story-time p {
     padding-bottom: 5px;
     line-height: 39px;
@@ -1760,7 +1761,7 @@ footer .copy-right span {
     margin-top: -13px;
 }
 
-.agree-count{
+.agree-count {
     margin-right: 20px;
 }
 
@@ -1779,6 +1780,7 @@ footer .copy-right span {
     background-color: #fafafa;
     width: 350px;
 }
+
 .story-box-warp ul li .story-content .story-title {
     cursor: pointer;
 }
@@ -1788,11 +1790,33 @@ footer .copy-right span {
     cursor: pointer;
     width: 25px;
 }
+
 .story-box-warp ul li:last-child {
     border: none;
 }
-.story-box-warp ul li .story-content .story-time p.short-tag{
+
+.story-box-warp ul li .story-content .story-time p.short-tag {
     font-size: 12px;
     color: #bbb;
+
+}
+
+/* Form wrapper styling */
+
+.form-wrapper {
+
+    width: 450px;
+
+    padding: 15px;
+
+    margin: 150px auto 50px auto;
+
+    background: #444;
+
+    background: rgba(0,0,0, .2 );
+
+    border-radius: 10px;
+
+    box-shadow: 0 1px 1px rgba(0,0,0, .4 ) inset, 0 1px 0 rgba(255,255,255, .2 );
 
 }

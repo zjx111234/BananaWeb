@@ -20,6 +20,41 @@
 
     var zeroModal = {};
 
+    // 模板定义 --------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * 遮罩层的html模板 (注意，html元素中定义的以zero、或zeromodal开头的属性不要随意修改，以免影响正常使用)
+     * @type {String}
+     */
+    var _zero_overlay_template = '<div zero-unique-overlay="{{unique}}" class="zeromodal-overlay" style="opacity:{{opacity}};z-index:{{_tmp_last_zindex}};width:{{_width}}px;height:{{_height}}px"></div>';
+
+    /**
+     * 弹出层的html模板 (注意，html元素中定义的以zero、或zeromodal开头的属性不要随意修改，以免影响正常使用)
+     * @type {String}
+     */
+    var _zero_modal_template = '<div zero-unique-container="{{unique}}" class="zeromodal-container" style="z-index:{{_tmp_last_zindex}};width:{{_width}}px;height:{{_height}}px;left:{{_left}}px;top:{{_top}}">';
+    _zero_modal_template += '       {{#drag}}<div zero-unique-top="{{unique}}" class="zeromodal-top"></div>{{/drag}}';
+    _zero_modal_template += '       <div zeromodal-unqiue-header="{{unique}}" class="zeromodal-header">';
+    _zero_modal_template += '           {{#close}}<div title="关闭" zero-close-unique="{{unique}}" class="zeromodal-close">×</div>{{/close}}';
+    _zero_modal_template += '           {{#max}}<div title="最大化/取消最大化" zero-max-unique="{{unique}}" class="zeromodal-max"></div>{{/max}}';
+    _zero_modal_template += '           <span class="modal-title">{{title}}</span>';
+    _zero_modal_template += '       </div>';
+    _zero_modal_template += '       <div zero-unique-body="{{unique}}" class="zeromodal-body">';
+    _zero_modal_template += '           {{#url}}<div class="zeromodal-loading1"></div>{{#iframe}}<iframe zero-unique-frame="{{unique}}" src="{{url}}" class="zeromodal-frame"></iframe>{{/iframe}}{{/url}}';
+    _zero_modal_template += '       </div>';
+    _zero_modal_template += '       {{#resize}}<div zero-unique-sweep-tee="{{unique}}" class="zeromodal-sweep-tee"></div>{{/resize}}';
+    _zero_modal_template += '   </div>';
+
+    /**
+     * 弹出框、确认框的html模板(注意，html元素中定义的以zero、或zeromodal开头的属性不要随意修改，以免影响正常使用)
+     * @type {String}
+     */
+    var _zero_alert_template = '{{#iconDisplay}}{{&iconDisplay}}{{/iconDisplay}}{{^iconDisplay}}<div class="zeromodal-icon {{iconClass}}">{{&iconText}}</div>{{/iconDisplay}}';
+    _zero_alert_template += '   <div class="zeromodal-title1">{{&_content}}</div>';
+    _zero_alert_template += '   <div class="zeromodal-title2">{{&contentDetail}}</div>';
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------
+
     /**
      * 默认的参数
      * @type {Object}
@@ -28,16 +63,19 @@
         unique: '', // 模态框的唯一值，默认系统生成UUID，不建议自定义
         title: '', //标题
         content: '', //显示内容
+        escape: true, //是否编码输出 HTML 字符
         url: false, //如果输入url，将会根据url返回的内容显示在弹出层中
         iframe: false, //是否需要嵌入iframe，默认false，该参数需要和url一起使用
         width: '500px', //宽度（px、pt、%）
         height: '300px', //高度（px、pt、%）
+        top: undefined, // top位置（px）
         transition: false, //是否需要出场动画，默认false
         opacity: 0.2, // 遮罩层的透明度
         overlay: true, //是否需要显示遮罩层，默认true
         overlayClose: false, //是否允许点击遮罩层直接关闭弹出层，默认否
         drag: true, // 是否允许拖动显示层，注意不能和resize属性同时使用，默认可拖动
         dragHandle: 'top', // 允许选择拖动的位置,配合drag使用,提供值为“top、container”，默认为top
+        close: true, // 是否显示关闭
         max: false, // 是否允许最大化
         resize: false, // 是否允许调整大小
         resizeAfterFn: undefined, // 调整大小后触发的事件
@@ -421,12 +459,13 @@
     function _buildOverlay(opt) {
         _tmp_last_zindex++;
 
-        var _width = $(document).width();
-        var _height = $(document).height();
+        opt._tmp_last_zindex = _tmp_last_zindex;
+        opt._width = $(document).width();
+        opt._height = $(document).height();
 
         // 是否需要显示遮罩层
         if (opt.overlay) {
-            var _overlay = $('<div zero-unique-overlay="' + opt.unique + '" class="zeromodal-overlay" style="opacity:' + opt.opacity + ';z-index:' + _tmp_last_zindex + ';width:' + _width + 'px;height:' + _height + 'px"></div>');
+            var _overlay = $(Mustache.render(_zero_overlay_template, opt));
             $('body').append(_overlay);
 
             // 是否允许点击遮罩层关闭modal
@@ -469,17 +508,21 @@
 
         //// 获取modal的位置
         var _left = (_wwidth - _width) / 2;
-        var _top = $(window).scrollTop() + Math.ceil(($(window).height() - _height) / 3);
+        var _top = ($(window).scrollTop() + Math.ceil(($(window).height() - _height) / 3)) + 'px';
+        if (opt.top !== undefined) {
+            _top = opt.top;
+        }
 
-        //// 构建容器
-        var _container = $('<div zero-unique-container="' + opt.unique + '" class="zeromodal-container" style="z-index:' + _tmp_last_zindex + ';width:' + _width + 'px;height:' + _height + 'px;left:' + _left + 'px;top:' + (opt.transition ? _top - 50 : _top) + 'px"></div>');
-        $('body').append(_container);
+
+        opt._tmp_last_zindex = _tmp_last_zindex;
+        opt._width = _width;
+        opt._height = _height;
+        opt._left = _left;
+        opt._top = _top;
+        $('body').append(Mustache.render(_zero_modal_template, opt));
 
         //// 判断是否需要允许拖拽显示层
         if (opt.drag) {
-            var _dragTopper = $('<div zero-unique-top="' + opt.unique + '" class="zeromodal-top"></div>');
-            _container.append(_dragTopper);
-
             // 调用拖拽组件
             var _handle;
             if (opt.dragHandle === 'container') {
@@ -489,17 +532,6 @@
             }
             new Drag($('[zero-unique-container="' + opt.unique + '"]')[0], { handle: _handle, limit: false });
         }
-
-        //// 构建头部
-        var _headerHtml = '<div zeromodal-unqiue-header="' + opt.unique + '" class="zeromodal-header">';
-        _headerHtml += '        <div title="关闭" zero-close-unique="' + opt.unique + '" class="zeromodal-close">×</div>';
-        if (opt.max) {
-            _headerHtml += '    <div title="最大化/取消最大化" zero-max-unique="' + opt.unique + '" class="zeromodal-max"></div>';
-        }
-        _headerHtml += '        <span class="modal-title">' + opt.title + '</span>';
-        _headerHtml += '   </div>';
-        var _header = $(_headerHtml);
-        _container.append(_header);
 
         // 绑定关闭事件
         $('[zero-close-unique="' + opt.unique + '"]').click(function() {
@@ -523,38 +555,39 @@
         }
 
         //// 构建内容区
-        var _body = $('<div zero-unique-body="' + opt.unique + '" class="zeromodal-body"></div>');
-        _container.append(_body);
         _resizeBodyHeight(opt); // 重置body的高度
 
         // 构建拖拽区
         if (opt.resize) {
-            _container.append('<div zero-unique-sweep-tee="' + opt.unique + '" class="zeromodal-sweep-tee"></div>');
             _dragChangeSize(opt.unique, opt); // 绑定拖拽事件
         }
 
         if (typeof opt.onLoad === 'function') { opt.onLoad(opt); }
 
         // 如果url为空，则直接显示content的内容
+        var _body = $('[zero-unique-body="' + opt.unique + '"]');
         if (!opt.url) {
-            // 如果是div方式，则设置overflow-y属性，同时通过ajax获取内容
-            $('[zero-unique-body="' + opt.unique + '"]').addClass('zeromodal-overflow-y');
+            _body.addClass('zeromodal-overflow-y');
 
-            _body.html(opt.content);
+            if (opt.escape) {
+                _body.html(opt.content);
+            } else {
+                _body.text(opt.content);
+            }
+
             if (typeof opt.onComplete === 'function') { opt.onComplete(opt); }
         } else {
-            _body.html('<div class="zeromodal-loading1"></div>');
+            _body.append('<div class="zeromodal-loading1"></div>');
             // 如果iframe为true，则通过iframe的方式加载需要显示的内容
             if (opt.iframe) {
-                var _iframe = $('<iframe src="' + opt.url + '" class="zeromodal-frame"></iframe>');
-                _body.append(_iframe);
+                var _iframe = $('[zero-unique-frame="' + opt.unique + '"]');
                 _iframe.load(function() {
                     $('.zeromodal-loading1').remove();
                     if (typeof opt.onComplete === 'function') { opt.onComplete(opt); }
                 });
             } else {
                 // 如果是div方式，则设置overflow-y属性，同时通过ajax获取内容
-                $('[zero-unique-body="' + opt.unique + '"]').addClass('zeromodal-overflow-y');
+                _body.addClass('zeromodal-overflow-y');
                 $.ajax({
                     url: opt.url,
                     dataType: "html",
@@ -569,10 +602,10 @@
         }
 
         //// 构建尾部区
-        _buildFooter(opt, _container);
+        _buildFooter(opt, $('[zero-unique-container="' + opt.unique + '"]'));
 
         if (opt.esc) {
-            $('body').one("keyup", function(e) {
+            $('body').one('keyup', function(e) {
                 if (e.keyCode === 27) {
                     _close(opt);
                 }
@@ -599,7 +632,7 @@
                 // 显示自定义的按钮
                 for (var i = 0; i < opt.buttons.length; i++) {
                     var b = opt.buttons[i];
-                    
+
                     var btn = $('<button zero-btn-unique="' + opt.unique + '" class="' + (b.className || '') + '"' + (b.attr !== undefined ? ' ' + b.attr : '') + '>' + b.name + '</button>');
                     if (typeof b.fn === 'function') {
                         (function(b) {
@@ -656,10 +689,14 @@
         if (typeof opt === 'undefined' || typeof opt.cancelTitle === 'undefined') {
             opt.cancelTitle = '取消';
         }
+        if (typeof opt.width === 'undefined') {
+            opt.width = '350px';
+        }
+        if (typeof opt.height === 'undefined') {
+            opt.height = '300px';
+        }
 
         var params = _initParams(opt);
-        params.width = '360px';
-        params.height = '300px';
         params.esc = true;
         params.ok = true;
         params.buttonTopLine = false;
@@ -670,23 +707,17 @@
             params.cancelFn = cancelFn;
         }
 
-        var _content = params.content || '';
-        var _contentDetail = params.contentDetail || '';
+        params._content = params.content || '';
         params.content = '';
 
         // 渲染
         _render(params);
 
         // 渲染内容
-        var icon;
-        if (typeof params.iconDisplay !== 'undefined') {
-            icon = $(params.iconDisplay);
-        } else {
-            icon = $('<div class="zeromodal-icon ' + params.iconClass + '">' + params.iconText + '</div>');
-        }
-        var text = $('<div class="zeromodal-title1">' + _content + '</div><div class="zeromodal-title2">' + _contentDetail + '</div>');
-        $('[zero-unique-body="' + params.unique + '"]').append(icon);
-        $('[zero-unique-body="' + params.unique + '"]').append(text);
+        var _zeroBody = $('[zero-unique-body="' + params.unique + '"]');
+        _zeroBody.append(Mustache.render(_zero_alert_template, params));
+        _zeroBody.removeClass('zeromodal-overflow-y');
+
         $('[zero-unique-body="' + params.unique + '"]').removeClass('zeromodal-overflow-y');
 
         // 给按钮添加focus
@@ -737,12 +768,13 @@
     function _resizePostion(opt) {
         var _wwidth = $(window).width();
         var _wheight = $(window).height();
-        var _width = parseInt($('[zero-unique-container="' + opt.unique + '"]').css('width').replace('px', ''));
-        var _height = parseInt($('[zero-unique-container="' + opt.unique + '"]').css('height').replace('px', ''));
+        var _container = $('[zero-unique-container="' + opt.unique + '"]');
+        var _width = parseInt(_container.css('width').replace('px', ''));
+        var _height = parseInt(_container.css('height').replace('px', ''));
 
         var _left = (_wwidth - _width) / 2;
         var _top = $(window).scrollTop() + Math.ceil(($(window).height() - _height) / 3);
-        $('[zero-unique-container="' + opt.unique + '"]').css('left', _left + 'px').css('top', _top + 'px');
+        _container.css('left', _left + 'px').css('top', _top + 'px');
     }
 
     /**

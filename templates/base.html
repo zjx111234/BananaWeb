@@ -45,7 +45,8 @@
             </ul>
         {% endblock %}
         <ul class="nav navbar-nav navbar-right transition">
-            <li class="search-li js-show-search-box"><i class="icon icon-search "></i><span>搜索</span></li>
+            <li class="search-li js-show-search-box"><i class="icon icon-search "></i><a class="index-search"
+                    href="javascript:void(0);" >搜索</a></li>
             {% if request.user.is_authenticated %}
                 <li class=""><img src="/static/uploads/{{ request.user.userprofile.head_img|truncate_url }}"
                                   style="width:30px;height:30px;"></li>
@@ -120,6 +121,23 @@
 <script type="text/javascript" src="/static/bootstrap/js/jquery.nanoscroller.js"></script>
 <script type="text/javascript" src="/static/bootstrap/js/jquery.nanoscroller.min.js"></script>
 <script type="text/javascript" src="/static/bootstrap/js/overthrow.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $(".index-search").click(function () {
+                zeroModal.show({
+                    title: '搜你所想',
+                    iframe: true,
+                    url: '{% url 'search' %}',
+                    width: '50%',
+                    height: '25%',
+                    cancel: false,
+                });
+            });
+        });
+    </script>
+
+
+
 {% block bottom-js %}
 
 {% endblock %}

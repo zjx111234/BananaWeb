@@ -19,7 +19,10 @@
             </ul>
         </div>
         <div class="user-content-warp">
-
+             <ul class="nav-box">
+                <li class="active"><a href="{% url 'user_draft' user_info.id %}">博文({{ draft_count }})</a></li>
+                <li class=""><a href="{% url 'user_short_draft' user_info.id %}">段子</a></li>
+            </ul>
             <div class="message-box">
                 {% if draft_list %}
                     {% for article in draft_list %}

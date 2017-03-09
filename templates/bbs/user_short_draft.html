@@ -8,39 +8,35 @@
                     <li class=""><a href="{% url 'user_detail' request.user.userprofile.id %}">我的消息</a></li>
                     <li class=""><a href="{% url 'user_comment' request.user.userprofile.id %}">我的评论</a></li>
                     <li class=""><a href="{% url 'user_article' request.user.userprofile.id %}">我的文章</a></li>
-                    <li class=""><a href="{% url 'user_draft' request.user.userprofile.id %}">我的草稿</a></li>
-                    <li class="active"><a href="{% url 'user_like_article' request.user.userprofile.id %}">赞过的文章</a>
-                    </li>
+                    <li class="active"><a href="{% url 'user_draft' request.user.userprofile.id %}">我的草稿</a></li>
+                    <li class=""><a href="{% url 'user_like_article' request.user.userprofile.id %}">赞过的文章</a></li>
                 {% else %}
                     <li class=""><a href="{% url 'user_comment' request.get_full_path|get_end_arg %}">TA的评论</a></li>
                     <li class=""><a href="{% url 'user_article' request.get_full_path|get_end_arg %}">TA的文章</a></li>
-                    <li class="active"><a href="{% url 'user_like_article' request.get_full_path|get_end_arg %}">TA赞过的文章</a></li>
+                    <li class=""><a href="{% url 'user_like_article' request.get_full_path|get_end_arg %}">TA赞过的文章</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
         <div class="user-content-warp">
             <ul class="nav-box">
-                <li class="active"><a href="{% url 'user_like_article' user_info.id %}">博文({{ article_count }})</a></li>
-                <li class=""><a href="{% url 'like_short_articles' user_info.id %}">段子</a></li>
+                <li class=""><a href="{% url 'user_draft' user_info.id %}">博文</a></li>
+                <li class="active"><a href="{% url 'user_short_draft' user_info.id %}">段子({{ draft_count }})</a></li>
             </ul>
             <div class="message-box">
-                {% if user_like_articles %}
-                    {% for article in user_like_articles %}
+                {% if draft_list %}
+                    {% for article in draft_list %}
                         <div class="mod-b mod-art ">
-                            <a class="transition" href="{% url 'article_detail' article.id %}" target="_blank">
-                                <div class="mod-thumb">
-                                    <img class="lazy" src="/static/uploads/{{ article.head_img|truncate_url }}"
-                                         alt="{{ article.title }}">
-                                </div>
-                            </a>
-                            <div class="mob-ctt">
-                                <h3><a href="{% url 'article_detail' article.id %}" class="transition"
-                                       target="_blank">{{ article.title }}</a>
-                                </h3>
+                            <a href="javascript:void(0);" id="{{ article.id }}" onclick="_confirm_short_del(this.id);"
+                               class="del-draft" style="margin-top: 40px"></a>
+                             <a class="transition" href="{% url 'modify_short_draft' article.id %}" target="_blank">
+                                <h3>{{ article.title }}</h3>
+                             </a>
                                 <div class="mob-author"><span class="time">{{ article.pub_date|date_format }}</span>
                                 </div>
-                                <div class="mob-sub">{{ article.brief }}</div>
-                            </div>
+                                <div class="mob-author">
+                                    {{ article.content }}
+                                </div>
                         </div>
                     {% endfor %}
 
@@ -48,8 +44,8 @@
                         <ul class="pagination">
                             <li><a href="?page=1" aria-label="First"><span aria-hidden="true"><i
                                     class="icon icon-first"></i></span></a></li>
-                            {% if user_like_articles.has_previous %}
-                                <li><a href="?page={{ user_like_articles.previous_page_number }}"
+                            {% if draft_list.has_previous %}
+                                <li><a href="?page={{ draft_list.previous_page_number }}"
                                        aria-label="Previous"><span aria-hidden="true"><i
                                         class="icon icon-lt"></i></span></a></li>
                             {% else %}
@@ -58,28 +54,44 @@
                             {% endif %}
                             <li class="active">
                                 <a>
-                                    {{ user_like_articles.number }}
+                                    {{ draft_list.number }}
                                 </a>
                             </li>
-                            {% if user_like_articles.has_next %}
-                                <li><a href="?page={{ user_like_articles.next_page_number }}"> <i
-                                        class="icon icon-gt"></i></a>
+                            {% if draft_list.has_next %}
+                                <li><a href="?page={{ draft_list.next_page_number }}"> <i class="icon icon-gt"></i></a>
                                 </li>
                             {% else %}
                                 <li class="disabled"><a href="#"> <i class="icon icon-gt"></i></a></li>
                             {% endif %}
-                            <li><a href="?page={{ user_like_articles.paginator.num_pages }}"><i
+                            <li><a href="?page={{ draft_list.paginator.num_pages }}"><i
                                     class="icon icon-last"></i></a></li>
                         </ul>
                     </nav>
                 {% else %}
-                    <div class="no-content-prompt">还没赞过啊，老铁</div>
+                    <div class="no-content-prompt">没存过草稿，亲</div>
                 {% endif %}
+
             </div>
         </div>
-
-
     </div>
 
+    <script>
+        function _confirm_short_del(id) {
+            zeroModal.confirm({
+                content: '确定删除草稿吗？',
+                contentDetail: '提交后将不能进行修改。',
+                okFn: function () {
+                    var url = "del_short_draft/" + id
+                    $.get(url, function (callback) {
+                        if (callback == 'success') {
+                            location.reload();
+                        } else {
+                            zeroModal.error('删除失败');
+                        }
+                    });
+                }
 
+            });
+        }
+    </script>
 {% endblock %}

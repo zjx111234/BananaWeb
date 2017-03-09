@@ -107,7 +107,7 @@ class UserProfile(models.Model):
 class ShortArticles(models.Model):
     author = models.ForeignKey('UserProfile')
     content = models.TextField(u'内容')
-    pub_date =  models.DateTimeField(blank=True, null=True)
+    pub_date = models.DateTimeField(blank=True, null=True)
     tag_choices = (
         ('笑话', u'笑话'),
         ('荤段子', '荤段子'),
@@ -120,7 +120,7 @@ class ShortArticles(models.Model):
     thumb_count = models.IntegerField(u'赞', default=0)
     disgusting_count = models.IntegerField(u'踩', default=0)
     priority = models.IntegerField(u'优先级', default=1000)
-    title = models.CharField(u'标题', max_length=255,)
+    title = models.CharField(u'标题', max_length=30, )
     status_choices = (('draft', u"草稿"),
                       ('published', u"已发布"),
                       ('hidden', u"隐藏"),

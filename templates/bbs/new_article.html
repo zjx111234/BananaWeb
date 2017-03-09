@@ -7,15 +7,15 @@
             <div class="title">投稿</div>
         </div>
         <div class="nav-warp">
-                <ul>
-                    <li class="active"><a href="{% url 'new_article'  %}">博文</a></li>
-                    <li class=""><a href="{% url 'new_short_article' %}">段子</a></li>
-                    <li class=""><a href="#">美图</a></li>
-                </ul>
-            </div>
-        {% for item in article_form %}
-            <p class="errors-remind" style="color:red;">{{ item.errors }}</p>
-        {% endfor %}
+            <ul>
+                <li class="active"><a href="{% url 'new_article' %}">博文</a></li>
+                <li class=""><a href="{% url 'new_short_article' %}">段子</a></li>
+                <li class=""><a href="#">美图</a></li>
+            </ul>
+        </div>
+        <div class="form-errors" style="margin-top: 10px">
+            {{ article_form.non_field_errors }}
+        </div>
         <form method="post" enctype="multipart/form-data">{% csrf_token %}
             <div class="tg-info-box">
                 <div class="new-article-title">文章标题</div>

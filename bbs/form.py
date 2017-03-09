@@ -28,11 +28,21 @@ class ArticleModelForm(ModelForm):
             class_name = 'publish-' + field_name
             field.widget.attrs.update({'class': class_name})
 
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"所有项都为必填项")
+        elif len(self.cleaned_data['title']) > 20:
+            raise forms.ValidationError(u"标题不得超过20字")
+        else:
+            cleaned_data = super(ArticleModelForm, self).clean()
+        return cleaned_data
+
 
 class ShortArticleModelForm(ModelForm):
     class Meta:
         model = models.ShortArticles
         exclude = ('author', 'pub_date', 'priority', 'thumb_count', 'disgusting_count')
+
     def __init__(self, *args, **kwargs):
         super(ShortArticleModelForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['placeholder'] = '请输入标题'
@@ -40,6 +50,17 @@ class ShortArticleModelForm(ModelForm):
             field = self.base_fields[field_name]
             class_name = 'publish-' + field_name
             field.widget.attrs.update({'class': class_name})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"所有项都为必填项")
+        elif len(self.cleaned_data['title']) > 20:
+            raise forms.ValidationError(u"标题不得超过20字")
+        elif len(self.cleaned_data['content']) > 255:
+            raise forms.ValidationError(u"文章长度超出限制")
+        else:
+            cleaned_data = super(ShortArticleModelForm, self).clean()
+        return cleaned_data
 
 
 class ChangePwdForm(forms.Form):
